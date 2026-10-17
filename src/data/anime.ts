@@ -45,4 +45,14 @@ export interface AnimeItem {
 }
 
 export const animeData: AnimeItem[] = [
+	{
+		title: "龙与虎",
+		status: "completed",
+		rating: 9.5,
+		progress: { watched: 25, total: 25 },
+		year: "2008",
+		studio: "J.C.STAFF",
+		genres: ["恋爱", "校园", "喜剧"],
+		period: { start: "2008-10", end: "2009-03" },
+	},
 ];
