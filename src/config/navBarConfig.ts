@@ -56,6 +56,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:auto-awesome-outline-rounded",
 		pageKey: "moments",
 	},
+	Videos: {
+		name: "视频",
+		url: "/videos/",
+		icon: "material-symbols:video-library-outline-rounded",
+		pageKey: "videos",
+	},
 	Anime: {
 		name: i18n(I18nKey.anime),
 		url: "/anime/",
@@ -143,6 +149,7 @@ const defaultNavBarConfig: NavBarConfig = {
 		LinkPresets.Archive,
 		LinkPresets.Friends,
 		LinkPresets.Moments,
+		LinkPresets.Videos,
 		LinkPresets.Anime,
 		LinkPresets.Compass,
 		LinkPresets.Albums,

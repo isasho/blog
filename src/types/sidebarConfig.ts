@@ -33,6 +33,7 @@ export type SidebarPage =
 	| "friends" // 友链
 	| "moments" // 动态
 	| "anime" // 番剧收藏
+	| "videos" // 视频
 	| "compass" // 站点罗盘
 	| "skills" // 技能
 	| "projects" // 项目

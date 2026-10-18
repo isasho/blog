@@ -1,0 +1,15 @@
+---
+/**
+ * 视频页：本地视频收藏，卡片点击后站内弹窗播放。
+ */
+import VideoSection from "@components/organisms/VideoSection.svelte";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { videosData } from "../data/videos";
+
+const title = "视频";
+const description = "我的视频收藏";
+---
+
+<MainGridLayout title={title} description={description} page="videos">
+    <VideoSection videos={videosData} title={title} subtitle={description} client:load></VideoSection>
+</MainGridLayout>
