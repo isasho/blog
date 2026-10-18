@@ -25,6 +25,8 @@ export interface AnimeItem {
 	cover?: string;
 	/** 条目外链（Bangumi/官方站等）；省略则封面不可点 */
 	link?: string;
+	/** 本地视频地址（相对 /public 或绝对 URL）；存在时点击封面弹窗内联播放 */
+	video?: string;
 	status: AnimeStatus;
 	/** 个人评分 0-10 */
 	rating: number;
@@ -49,6 +51,7 @@ export const animeData: AnimeItem[] = [
 		title: "龙与虎",
 		cover: "/assets/anime/toradora.jpg",
 		link: "https://next.xifanacg.com/anime/1889",
+		video: "/videos/demo.mp4",
 		status: "completed",
 		rating: 9.5,
 		progress: { watched: 25, total: 25 },

@@ -34,6 +34,9 @@ const progressRatio = $derived(
 const metaLine = $derived(
 	[anime.year, anime.studio].filter(Boolean).join(" · "),
 );
+
+/** 站内视频弹窗状态 */
+let showVideo = $state(false);
 </script>
 
 <article
@@ -58,8 +61,8 @@ const metaLine = $derived(
 			</span>
 		{/if}
 		<span class="anime-card__scrim" aria-hidden="true"></span>
-		{#if anime.link}
-			<!-- 可点封面：悬停深色 scrim + 播放钮 -->
+		{#if anime.link || anime.video}
+			<!-- 可点封面（外链或站内视频）：悬停深色 scrim + 播放钮 -->
 			<span class="anime-card__play" aria-hidden="true">
 				<Icon icon="material-symbols:play-arrow-rounded" />
 			</span>
@@ -70,7 +73,16 @@ const metaLine = $derived(
 		</span>
 	{/snippet}
 
-	{#if anime.link}
+	{#if anime.video}
+		<button
+			type="button"
+			class="anime-card__cover"
+			onclick={() => (showVideo = true)}
+			aria-label={anime.title}
+		>
+			{@render coverContent()}
+		</button>
+	{:else if anime.link}
 		<a
 			class="anime-card__cover"
 			href={anime.link}
@@ -126,6 +138,39 @@ const metaLine = $derived(
 	</div>
 </article>
 
+{#if showVideo}
+	<div
+		class="anime-video-modal"
+		role="dialog"
+		aria-modal="true"
+		aria-label={anime.title}
+	>
+		<button
+			type="button"
+			class="anime-video-modal__backdrop"
+			onclick={() => (showVideo = false)}
+			aria-label="关闭"
+		></button>
+		<div class="anime-video-modal__panel">
+			<video
+				class="anime-video-modal__video"
+				src={url(anime.video)}
+				controls
+				autoplay
+				playsinline
+			></video>
+			<button
+				type="button"
+				class="anime-video-modal__close"
+				onclick={() => (showVideo = false)}
+				aria-label="关闭"
+			>
+				<Icon icon="material-symbols:close-rounded" aria-hidden="true" />
+			</button>
+		</div>
+	</div>
+{/if}
+
 <style lang="stylus">
 .anime-card
 	position: relative
@@ -155,6 +200,14 @@ const metaLine = $derived(
 			unquote("color-mix(in oklab, var(--primary) 16%, var(--surface-container-low))"),
 			var(--surface-container-high))
 		text-decoration: none
+		/* button 形态复位（站内视频弹窗入口） */
+		border: none
+		padding: 0
+		width: 100%
+		font: inherit
+		color: inherit
+		text-align: inherit
+		cursor: pointer
 
 	&__cover-img
 		display: block
@@ -328,6 +381,60 @@ const metaLine = $derived(
 		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
 		&:hover
 			color: var(--primary)
+
+/* 站内视频弹窗：封面点击后内联播放，不跳转外链 */
+.anime-video-modal
+	position: fixed
+	inset: 0
+	z-index: 100
+	display: flex
+	align-items: center
+	justify-content: center
+	padding: 1.5rem
+
+	&__backdrop
+		position: absolute
+		inset: 0
+		border: none
+		background: unquote("color-mix(in srgb, #000 60%, transparent)")
+		cursor: pointer
+
+	&__panel
+		position: relative
+		z-index: 1
+		width: min(90vw, 56rem)
+		border-radius: var(--shape-corner-l)
+		overflow: hidden
+		background: #000
+		box-shadow: var(--m3e-elevation-4)
+
+	&__video
+		display: block
+		width: 100%
+		height: auto
+		background: #000
+
+	&__close
+		position: absolute
+		top: 0.5rem
+		right: 0.5rem
+		z-index: 2
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 2.25rem
+		height: 2.25rem
+		padding: 0
+		border: none
+		border-radius: var(--shape-corner-full)
+		background: unquote("color-mix(in srgb, #000 60%, transparent)")
+		color: #fff
+		cursor: pointer
+		> :global(svg)
+			width: 1.25rem
+			height: 1.25rem
+		&:hover
+			background: unquote("color-mix(in srgb, #000 80%, transparent)")
 
 :global(html.motion-reduced) .anime-card,
 :global(html.motion-reduced) .anime-card__cover-img,
