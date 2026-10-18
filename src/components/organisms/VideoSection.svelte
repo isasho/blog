@@ -1,7 +1,8 @@
 <script lang="ts">
 /**
  * 视频页主体（有机体）：页头 + 视频卡片网格 + 站内弹窗播放。
- * 卡片点击后在当前页面内联播放（<video controls>），不跳转外链。
+ * 有 src 的卡片点击后在当前页面内联播放（<video controls>）；
+ * 有 link 的卡片渲染为外链，点击新标签打开。
  */
 import Card from "@components/atoms/display/Card.svelte";
 import PageHeader from "@components/molecules/PageHeader.svelte";
@@ -17,6 +18,8 @@ let {
 
 /** 当前播放的视频（null = 弹窗关闭） */
 let active = $state<VideoItem | null>(null);
+
+const activeSrc = $derived(active?.src ?? "");
 </script>
 
 <Card color="var(--card-bg)" radius="l" class="video-section px-8 py-6">
@@ -26,40 +29,57 @@ let active = $state<VideoItem | null>(null);
 		{subtitle}
 	/>
 
+	{#snippet cardContent(video: VideoItem)}
+		<span class="video-card__cover">
+			{#if video.cover}
+				<img
+					class="video-card__cover-img"
+					src={url(video.cover)}
+					alt={video.title}
+					loading="lazy"
+					referrerpolicy="no-referrer"
+				/>
+			{:else}
+				<span class="video-card__placeholder" aria-hidden="true">
+					<Icon icon="material-symbols:smart-display-outline-rounded" />
+				</span>
+			{/if}
+			<span class="video-card__scrim" aria-hidden="true"></span>
+			<span class="video-card__play" aria-hidden="true">
+				<Icon icon="material-symbols:play-arrow-rounded" />
+			</span>
+		</span>
+		<span class="video-card__body">
+			<span class="video-card__title">{video.title}</span>
+			{#if video.description}
+				<span class="video-card__desc">{video.description}</span>
+			{/if}
+		</span>
+	{/snippet}
+
 	{#if videos.length > 0}
 		<div class="video-list">
 			{#each videos as video (video.id)}
-				<button
-					type="button"
-					class="video-card"
-					onclick={() => (active = video)}
-					aria-label={video.title}
-				>
-					<span class="video-card__cover">
-						{#if video.cover}
-							<img
-								class="video-card__cover-img"
-								src={url(video.cover)}
-								alt={video.title}
-								loading="lazy"
-							/>
-						{:else}
-							<span class="video-card__placeholder" aria-hidden="true">
-								<Icon icon="material-symbols:smart-display-outline-rounded" />
-							</span>
-						{/if}
-						<span class="video-card__scrim" aria-hidden="true"></span>
-						<span class="video-card__play" aria-hidden="true">
-							<Icon icon="material-symbols:play-arrow-rounded" />
-						</span>
-					</span>
-					<span class="video-card__body">
-						<span class="video-card__title">{video.title}</span>
-						{#if video.description}
-							<span class="video-card__desc">{video.description}</span>
-						{/if}
-					</span>
-				</button>
+				{#if video.link}
+					<a
+						class="video-card"
+						href={video.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={video.title}
+					>
+						{@render cardContent(video)}
+					</a>
+				{:else}
+					<button
+						type="button"
+						class="video-card"
+						onclick={() => (active = video)}
+						aria-label={video.title}
+					>
+						{@render cardContent(video)}
+					</button>
+				{/if}
 			{/each}
 		</div>
 	{:else}
@@ -70,7 +90,7 @@ let active = $state<VideoItem | null>(null);
 	{/if}
 </Card>
 
-{#if active}
+{#if active && activeSrc}
 	<div
 		class="video-modal"
 		role="dialog"
@@ -86,7 +106,7 @@ let active = $state<VideoItem | null>(null);
 		<div class="video-modal__panel">
 			<video
 				class="video-modal__video"
-				src={url(active.src)}
+				src={url(activeSrc)}
 				controls
 				autoplay
 				playsinline
@@ -147,6 +167,7 @@ let active = $state<VideoItem | null>(null);
 	background: var(--card-bg)
 	text-align: left
 	color: inherit
+	text-decoration: none
 	cursor: pointer
 	transition:
 		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
