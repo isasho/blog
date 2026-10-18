@@ -8,21 +8,21 @@ category: Guides
 draft: false
 ---
 
-## Shirone Authoring & Usage Guide
+## Shirone 创作与使用指南
 
-Welcome to **Shirone** (白音) — an expressive, anime-inspired blog theme crafted around **Astro 7**, **Svelte 5**, and the **Material 3 Expressive (M3E)** design system.
+欢迎来到 **Shirone**（白音）——一款富有表现力、受动漫启发的博客主题，基于 **Astro 7**、**Svelte 5** 与 **Material 3 Expressive (M3E)** 设计系统打造。
 
-This guide walks you through post creation, frontmatter specifications, directory structure, and the full suite of built-in Markdown and MDX extensions.
+本指南将带你了解文章创建、frontmatter 规范、目录结构，以及完整的内置 Markdown 与 MDX 扩展。
 
 :::tip
-Shirone renders content server-side first (SSR-first). When navigating within the site, Swup seamlessly swaps the main container while preserving the outer application shell and continuous music playback.
+Shirone 优先在服务端渲染内容（SSR-first）。站内导航时，Swup 会无缝替换主容器，同时保留外层应用外壳与持续的音乐播放。
 :::
 
 ---
 
-## 1. Creating a New Post
+## 1. 创建新文章
 
-You can quickly scaffold a new post with standard frontmatter using the built-in CLI command:
+你可以使用内置的 CLI 命令快速生成一篇带标准 frontmatter 的新文章：
 
 ```bash
 # Create a single-file post
@@ -32,15 +32,15 @@ pnpm new-post my-first-post
 pnpm new-post guides/getting-started
 ```
 
-The newly created file will be placed in `src/content/posts/`.
+新创建的文件会放在 `src/content/posts/` 目录下。
 
 ---
 
-## 2. Frontmatter Specification
+## 2. Frontmatter 规范
 
-Every Markdown (`.md`) or MDX (`.mdx`) post starts with a YAML frontmatter block defining its metadata.
+每篇 Markdown（`.md`）或 MDX（`.mdx`）文章都以一段 YAML frontmatter 块开头，用来定义其元数据。
 
-### Example
+### 示例
 
 ```yaml
 ---
@@ -59,29 +59,29 @@ comment: true
 ---
 ```
 
-### Supported Frontmatter Fields
+### 支持的 Frontmatter 字段
 
-| Field | Type | Required | Description |
+| 字段 | 类型 | 必填 | 说明 |
 | :--- | :--- | :---: | :--- |
-| `title` | `string` | **Yes** | The main title of the post. |
-| `published` | `Date` | **Yes** | Publication date in `YYYY-MM-DD` format. |
-| `publishedAt` | `Date` | No | Precise publication instant used to order posts published on the same day. It must fall on `published` in the configured site time zone. |
-| `updated` | `Date` | No | Last updated date. When provided, an update notice badge is displayed. |
-| `updatedAt` | `Date` | No | Precise update instant used by feeds and machine-readable metadata. It must be paired with `updated`. |
-| `pinned` | `boolean` | No | Pin the post to the top of article lists (default: `false`). |
-| `description` | `string` | No | Post summary displayed in article cards, search results, and OpenGraph metadata. |
-| `image` | `string` | No | Cover image path. Supports relative (`./cover.webp`), public (`/images/cover.jpg`), or remote URLs. |
-| `tags` | `string[]` | No | Array of tag names for taxonomy filtering and tag clouds. |
-| `category` | `string` | No | Primary category name for taxonomy indexing. |
-| `draft` | `boolean` | No | Mark as draft. Draft posts are hidden during production build (`pnpm build`). |
-| `comment` | `boolean` | No | Toggle comment section for this specific post (default: `true`). |
-| `lang` | `string` | No | Language code (e.g. `en`, `zh_CN`, `ja`) if different from site default. |
+| `title` | `string` | **是** | 文章主标题。 |
+| `published` | `Date` | **是** | 发布日期，`YYYY-MM-DD` 格式。 |
+| `publishedAt` | `Date` | 否 | 用于给同一天发布的文章排序的精确发布时间，必须落在配置站点时区中的 `published` 当天。 |
+| `updated` | `Date` | 否 | 最后更新日期。提供后会显示更新提示徽标。 |
+| `updatedAt` | `Date` | 否 | 供订阅源与机器可读元数据使用的精确更新时间，必须与 `updated` 配对。 |
+| `pinned` | `boolean` | 否 | 将文章置顶到文章列表顶部（默认：`false`）。 |
+| `description` | `string` | 否 | 显示在文章卡片、搜索结果与 OpenGraph 元数据中的文章摘要。 |
+| `image` | `string` | 否 | 封面图路径。支持相对路径（`./cover.webp`）、public（`/images/cover.jpg`）或远程 URL。 |
+| `tags` | `string[]` | 否 | 用于分类筛选与标签云的标签名数组。 |
+| `category` | `string` | 否 | 用于分类索引的主分类名。 |
+| `draft` | `boolean` | 否 | 标记为草稿。草稿文章在生产构建（`pnpm build`）时隐藏。 |
+| `comment` | `boolean` | 否 | 为该文章开启/关闭评论区（默认：`true`）。 |
+| `lang` | `string` | 否 | 语言代码（如 `en`、`zh_CN`、`ja`），若与站点默认不同。 |
 
 ---
 
-## 3. Post Encryption
+## 3. 文章加密
 
-Shirone provides client-side post encryption. This is a static password gate, not server-side access control: the encrypted payload and asset URLs remain publicly downloadable, so do not use it for genuinely confidential files or regulated secrets. For private journals or restricted articles, specify a password in frontmatter:
+Shirone 提供客户端文章加密。这是一个静态密码门，而非服务端访问控制：加密载荷与资源 URL 仍然可被公开下载，因此不要用于真正机密的文件或受监管的机密。对于私人日记或受限文章，可在 frontmatter 中指定密码：
 
 ```yaml
 ---
@@ -94,20 +94,20 @@ hideHomeContent: true
 ---
 ```
 
-- `encrypted`: Set to `true` to enable encryption;
-- `password`: Passphrase string or number required to unlock the post;
-- `passwordHint`: Optional hint shown above the password entry form;
-- `hideHomeContent`: Hide word counts and content previews on the homepage to prevent data leakage.
+- `encrypted`：设为 `true` 以启用加密；
+- `password`：解锁文章所需的密码字符串或数字；
+- `passwordHint`：显示在密码输入框上方的可选提示；
+- `hideHomeContent`：在首页隐藏字数与内容预览，防止数据泄露。
 
 ---
 
-## 4. Organizing Post Files
+## 4. 组织文章文件
 
-Shirone supports both folder-based co-location and single-file layouts:
+Shirone 同时支持基于文件夹的同置布局与单文件布局：
 
-### Folder Structure (Recommended for Local Assets)
+### 文件夹结构（推荐用于本地资源）
 
-Co-locating your post and its media makes asset management straightforward:
+将文章与其媒体文件放在一起，能让资源管理更直观：
 
 ```text
 src/content/posts/
@@ -117,7 +117,7 @@ src/content/posts/
 │   └── diagram.png        <-- Inline illustration referenced in markdown
 ```
 
-### Single-File Structure (Lightweight Prose)
+### 单文件结构（轻量纯文本）
 
 ```text
 src/content/posts/
@@ -127,13 +127,13 @@ src/content/posts/
 
 ---
 
-## 5. Rich Markdown & MDX Extensions
+## 5. 丰富的 Markdown 与 MDX 扩展
 
-Shirone includes modern Markdown extensions out of the box:
+Shirone 开箱即用地内置了现代 Markdown 扩展：
 
-### 5.1 Admonitions
+### 5.1 提示框（Admonitions）
 
-Use container directives for notes, tips, warnings, and alerts:
+使用容器指令来标注笔记、提示、警告与提醒：
 
 ```markdown
 :::tip
@@ -145,9 +145,9 @@ Use warning containers to signal potential pitfalls or breaking changes.
 :::
 ```
 
-### 5.2 GitHub Repository Cards
+### 5.2 GitHub 仓库卡片
 
-Embed live, beautifully styled GitHub repository cards using the directive syntax:
+使用指令语法嵌入实时、样式精美的 GitHub 仓库卡片：
 
 ```markdown
 ::github{repo="LyraVoid/Shirone"}
@@ -155,9 +155,9 @@ Embed live, beautifully styled GitHub repository cards using the directive synta
 
 ::github{repo="LyraVoid/Shirone"}
 
-### 5.3 Expressive Code Blocks
+### 5.3 Expressive 代码块
 
-Enhanced code blocks feature syntax highlighting, file name badges, line numbers, and selective line highlighting:
+增强型代码块支持语法高亮、文件名徽标、行号以及选择性行高亮：
 
 ```typescript title="src/utils/theme.ts" {2,4-5}
 // Dynamic HCT color token derivation
@@ -167,20 +167,20 @@ const theme = themeFromSourceColor(argbFromHex("#f472b6"));
 console.log("Primary color token:", theme.schemes.light.primary);
 ```
 
-### 5.4 Mathematical Typesetting (KaTeX)
+### 5.4 数学排版（KaTeX）
 
-Render elegant LaTeX mathematical notation directly in Markdown:
+直接在 Markdown 中渲染优雅的 LaTeX 数学公式：
 
-- **Inline math**: $E = mc^2$ or Euler's formula $e^{i\pi} + 1 = 0$.
-- **Block math**:
+- **行内公式**：$E = mc^2$ 或欧拉公式 $e^{i\pi} + 1 = 0$。
+- **块级公式**：
 
 $$
 \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
 $$
 
-### 5.5 Mermaid Diagrams
+### 5.5 Mermaid 图表
 
-Create flowcharts, sequence diagrams, and architecture maps using plain text:
+使用纯文本创建流程图、时序图与架构图：
 
 ```mermaid
 sequenceDiagram
@@ -197,9 +197,9 @@ sequenceDiagram
     Page-->>Visitor: New Page Rendered
 ```
 
-### 5.6 Image Galleries & Fancybox Lightbox
+### 5.6 图片画廊与 Fancybox 灯箱
 
-Images automatically integrate with Fancybox for lossless zoom, pan gestures, and full-screen preview:
+图片会自动与 Fancybox 集成，支持无损缩放、平移手势与全屏预览：
 
 ```markdown
 ![Cover preview](./guide/cover.jpeg)
@@ -207,56 +207,56 @@ Images automatically integrate with Fancybox for lossless zoom, pan gestures, an
 
 ---
 
-## 6. Next Steps & Customization
+## 6. 后续步骤与自定义
 
-- **Site Configuration**: Learn about global settings in `src/config/siteConfig.ts` and [`src/config/README.md`](https://github.com/LyraVoid/Shirone/blob/main/src/config/README.md).
-- **Design Tokens**: Explore tokens and color palettes in `DESIGN.md` and `docs/m3e-standard.md`.
-- **Feedback & Community**: Share your ideas and questions on [GitHub Issues](https://github.com/LyraVoid/Shirone/issues).
+- **站点配置**：在 `src/config/siteConfig.ts` 与 [`src/config/README.md`](https://github.com/LyraVoid/Shirone/blob/main/src/config/README.md) 中了解全局设置。
+- **设计令牌**：在 `DESIGN.md` 与 `docs/m3e-standard.md` 中探索令牌与调色板。
+- **反馈与社区**：在 [GitHub Issues](https://github.com/LyraVoid/Shirone/issues) 分享你的想法与问题。
 
 ---
 
 ## markdown.md
 
-# An h1 header
+# 一个 h1 标题
 
-Paragraphs are separated by a blank line.
+段落之间用空行分隔。
 
-2nd paragraph. _Italic_, **bold**, and `monospace`. Itemized lists
-look like:
+第二段。_斜体_、**粗体**，以及 `monospace`。项目列表
+看起来像：
 
-- this one
-- that one
-- the other one
+- 这个
+- 那个
+- 还有那一个
 
-Note that --- not considering the asterisk --- the actual text
-content starts at 4-columns in.
+请注意 —— 不考虑星号 —— 实际文本
+内容从第 4 列开始。
 
-> Block quotes are
-> written like so.
+> 块引用就像
+> 这样书写。
 >
-> They can span multiple paragraphs,
-> if you like.
+> 它们可以跨多个段落，
+> 如果你愿意的话。
 
-Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
-in chapters 12--14"). Three dots ... will be converted to an ellipsis.
-Unicode is supported. ☺
+使用 3 个连字符表示长破折号。使用 2 个连字符表示范围（例如，"it's all
+in chapters 12--14"）。三个点 ... 会被转换为省略号。
+支持 Unicode。☺
 
-## An h2 header
+## 一个 h2 标题
 
-Here's a numbered list:
+这是一个有序列表：
 
-1. first item
-2. second item
-3. third item
+1. 第一项
+2. 第二项
+3. 第三项
 
-Note again how the actual text starts at 4 columns in (4 characters
-from the left side). Here's a code sample:
+再次注意，实际文本如何从第 4 列开始（距离左侧 4 个字符）。
+这里是一个代码示例：
 
     # Let me re-iterate ...
     for i in 1 .. 10 { do-something(i) }
 
-As you probably guessed, indented 4 spaces. By the way, instead of
-indenting the block, you can use delimited blocks, if you like:
+正如你可能猜到的，缩进了 4 个空格。顺便说一句，如果你愿意的话，
+除了缩进代码块，你也可以使用分隔代码块：
 
 ```
 define foobar() {
@@ -264,8 +264,8 @@ define foobar() {
 }
 ```
 
-(which makes copying & pasting easier). You can optionally mark the
-delimited block for Pandoc to syntax highlight it:
+（这使得复制和粘贴更容易）。你可以选择性地标记
+分隔代码块，让 Pandoc 对其进行语法高亮：
 
 ```python
 import time
@@ -276,20 +276,20 @@ for i in range(10):
     print i
 ```
 
-### An h3 header
+### 一个 h3 标题
 
-Now a nested list:
+现在是一个嵌套列表：
 
-1. First, get these ingredients:
+1. 首先，准备好这些食材：
 
-    - carrots
-    - celery
-    - lentils
+    - 胡萝卜
+    - 芹菜
+    - 小扁豆
 
-2. Boil some water.
+2. 烧一些水。
 
-3. Dump everything in the pot and follow
-    this algorithm:
+3. 把所有东西倒进锅里，然后按照
+    这个算法操作：
 
         find wooden spoon
         uncover pot
@@ -299,76 +299,76 @@ Now a nested list:
         wait 10 minutes
         goto first step (or shut off burner when done)
 
-    Do not bump wooden spoon or it will fall.
+    不要碰到木勺，否则它会掉下来。
 
-Notice again how text always lines up on 4-space indents (including
-that last line which continues item 3 above).
+再次注意，文本总是对齐在 4 空格缩进上（包括
+上面续接第 3 项的最后一行）。
 
-Here's a link to [a website](http://foo.bar), to a [local
-doc](local-doc.html), and to a [section heading in the current
-doc](#an-h2-header). Here's a footnote [^1].
+这里有一个指向 [某个网站](http://foo.bar) 的链接、指向 [本地
+文档](local-doc.html) 的链接，以及指向 [当前文档中的某个章节标题](#an-h2-header)
+的链接。这里有一个脚注 [^1]。
 
-[^1]: Footnote text goes here.
+[^1]: 脚注文本放在这里。
 
-Tables can look like this:
+表格可以看起来像这样：
 
-size material color
-
----
-
-9 leather brown
-10 hemp canvas natural
-11 glass transparent
-
-Table: Shoes, their sizes, and what they're made of
-
-(The above is the caption for the table.) Pandoc also supports
-multi-line tables:
+尺码 材质 颜色
 
 ---
 
-keyword text
+9 皮革 棕色
+10 麻帆布 本色
+11 玻璃 透明
+
+Table: 鞋子、它们的尺码，以及它们的材质
+
+（上面是表格的标题。）Pandoc 还支持
+多行表格：
 
 ---
 
-red Sunsets, apples, and
-other red or reddish
-things.
-
-green Leaves, grass, frogs
-and other things it's
-not easy being.
+关键词 文本
 
 ---
 
-A horizontal rule follows.
+红色 日落、苹果，以及
+其他红色或偏红的
+事物。
+
+绿色 树叶、草、青蛙，
+以及其他不容易"成为"的
+事物。
 
 ---
 
-Here's a definition list:
+接下来是一条水平分割线。
+
+---
+
+这里是一个定义列表：
 
 apples
-: Good for making applesauce.
+: 很适合用来做苹果酱。
 oranges
-: Citrus!
+: 柑橘类水果！
 tomatoes
-: There's no "e" in tomatoe.
+: "tomatoe" 里没有 "e"。
 
-Again, text is indented 4 spaces. (Put a blank line between each
-term/definition pair to spread things out more.)
+同样，文本缩进了 4 个空格。（在每个术语/定义对之间放一个空行，
+可以让它们更分散。）
 
-Here's a "line block":
+这里是一个"行块"：
 
-| Line one
-| Line too
-| Line tree
+| 第一行
+| 第二行
+| 第三行
 
-and images can be specified like so:
+图片可以像这样指定：
 
 [//]: # (![example image]&#40;./demo-banner.png "An exemplary image"&#41;)
 
-Inline math equations go in like so: $\omega = d\phi / dt$. Display
-math should get its own line and be put in in double-dollarsigns:
+行内数学公式像这样书写：$\omega = d\phi / dt$。块级
+数学公式应该独占一行，并用双美元符号包裹：
 
 $$I = \int \rho R^{2} dV$$
 
@@ -381,22 +381,22 @@ $$
 \end{equation*}
 $$
 
-And note that you can backslash-escape any punctuation characters
-which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.
+另外请注意，你可以反斜杠转义任何希望原样显示的标点
+字符，例如：\`foo\`、\*bar\* 等。
 
 ---
 
 ## markdown-enhancements.md
 
-Shirone provides a collection of theme-exclusive Markdown extensions and custom syntax containers. Built on top of our native unified AST processing pipeline, all extensions render into accessible, semantic HTML during site build time with **zero client JavaScript hydration overhead** and **100% M3E design token alignment**.
+Shirone 提供了一系列主题专属的 Markdown 扩展和自定义语法容器。它们构建在我们原生的 unified AST 处理管道之上，所有扩展都会在站点构建期间渲染成可访问的、语义化的 HTML，实现**零客户端 JavaScript 水合开销**和 **100% 的 M3E 设计令牌对齐**。
 
-## File Trees
+## 文件树
 
-File Trees turn multi-level project structures, source hierarchies, and terminal directory outputs into compact, interactive tree views with automatic extension icons, diff highlighting, and collapsible branches.
+文件树将多级项目结构、源码层级以及终端目录输出转换成紧凑、可交互的树形视图，并自动附带扩展名图标、差异高亮以及可折叠的分支。
 
-### 1. Nested List Syntax (`:::file-tree`)
+### 1. 嵌套列表语法（`:::file-tree`）
 
-Use the `:::file-tree` block directive when writing the file hierarchy directly as a Markdown nested list.
+当你要直接将文件层级写成 Markdown 嵌套列表时，请使用 `:::file-tree` 块指令。
 
 ```markdown
 :::file-tree{title="Shirone source tree"}
@@ -444,18 +444,18 @@ Use the `:::file-tree` block directive when writing the file hierarchy directly 
 - package.json
 :::
 
-#### Authoring Rules & Markers
+#### 编写规则与标记
 
-- **Diff States**: Prefix an item with `++` (green background & badge) or `--` (red background & strikethrough) to highlight changes.
-- **Comments**: Any text following a `#` is rendered as a muted, right-aligned inline comment.
-- **Emphasis**: Wrap names in `**bold**` to give key files prominent visual weight.
-- **Collapsible Folders**: Directories inferred from nested list items start expanded by default. Add a trailing slash (e.g. `components/`) to create a collapsed directory that readers can expand on click or via keyboard navigation.
+- **差异状态**：在条目前面加上 `++`（绿色背景和徽标）或 `--`（红色背景和删除线）来高亮变更。
+- **注释**：任何跟在 `#` 后面的文本都会渲染成柔和的、右对齐的行内注释。
+- **强调**：用 `**粗体**` 包裹文件名，让关键文件获得突出的视觉权重。
+- **可折叠文件夹**：从嵌套列表条目推断出的目录默认展开。添加尾部斜杠（例如 `components/`）可创建折叠目录，读者可通过点击或键盘导航将其展开。
 
 ---
 
-### 2. Terminal Output Syntax (```` ```file-tree ````)
+### 2. 终端输出语法（```` ```file-tree ````）
 
-When you already have directory tree text generated from command-line tools like `tree`, paste it directly into a `file-tree` fenced code block. Both Unicode branch characters (`├──`, `└──`, `│`) and ASCII branches are automatically parsed.
+当你已经拥有由 `tree` 等命令行工具生成的目录树文本时，可以直接将其粘贴到 `file-tree` 围栏代码块中。Unicode 分支字符（`├──`、`└──`、`│`）和 ASCII 分支都会被自动解析。
 
 ````markdown
 ```file-tree title="Build output" icon="simple"
@@ -475,20 +475,20 @@ dist
 └── favicon.ico
 ```
 
-#### Configuration Options
+#### 配置选项
 
-- `title="string"`: Sets a custom header title and accessible label for the tree.
-- `icon="colored" | "simple"`: Choose between multi-color extension icons (`colored`, default) or minimal monochrome icons (`simple`).
+- `title="string"`：为树设置自定义标题和无障碍标签。
+- `icon="colored" | "simple"`：在多彩扩展名图标（`colored`，默认）或极简单色图标（`simple`）之间选择。
 
 ---
 
-## Code Trees
+## 代码树
 
-Interactive Code Trees pair a multi-level file hierarchy navigation pane on the left with instant code panel switching on the right. They provide an IDE-like reading experience for multi-file examples, modules, or whole directory walk-throughs.
+交互式代码树将左侧的多级文件层级导航面板与右侧即时切换的代码面板配对。它为多文件示例、模块或整个目录的浏览提供类似 IDE 的阅读体验。
 
-### 1. Container Syntax (`:::code-tree`)
+### 1. 容器语法（`:::code-tree`）
 
-Combine multiple fenced code blocks within a `:::code-tree` block directive. Each code block specifies its path via `title="path/to/file"`.
+在 `:::code-tree` 块指令中组合多个围栏代码块。每个代码块通过 `title="path/to/file"` 指定其路径。
 
 ````markdown
 :::code-tree{title="Shirone Component Demo" height="380px" entry="src/Button.svelte"}
@@ -540,19 +540,19 @@ Combine multiple fenced code blocks within a `:::code-tree` block directive. Eac
 ```
 :::
 
-#### Configuration & Markers
+#### 配置与标记
 
-- `title="string"`: Sets the header title and accessible label for the code tree.
-- `height="string"`: Sets the height for the desktop view (default `420px`, e.g. `380px`, `26rem`).
-- `entry="filepath"`: Specifies which file is active upon first load.
-- `icon="colored" | "simple"`: Switch between colorful or minimal monochrome file icons.
-- `:active`: Place `:active` on any fenced code block to designate it as the default active tab.
+- `title="string"`：设置代码树的标题和无障碍标签。
+- `height="string"`：设置桌面视图的高度（默认 `420px`，例如 `380px`、`26rem`）。
+- `entry="filepath"`：指定首次加载时激活的文件。
+- `icon="colored" | "simple"`：在彩色或极简单色文件图标之间切换。
+- `:active`：在任意围栏代码块上放置 `:active`，将其指定为默认激活的标签页。
 
 ---
 
-### 2. Local Directory Auto-Import (`@[code-tree]`)
+### 2. 本地目录自动导入（`@[code-tree]`）
 
-Point directly to any local directory path in the workspace to automatically scan and generate an interactive code tree at build time without manually copying file contents.
+直接指向工作区中的任意本地目录路径，即可在构建时自动扫描并生成交互式代码树，而无需手动复制文件内容。
 
 ```markdown
 @[code-tree title="Anime Utilities" entry="status.ts"](/src/utils/anime)
@@ -564,20 +564,20 @@ Point directly to any local directory path in the workspace to automatically sca
 
 ## markdown-extended.md
 
-## GitHub Repository Cards
-You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API. 
+## GitHub 仓库卡片
+你可以添加链接到 GitHub 仓库的动态卡片，在页面加载时，仓库信息会从 GitHub API 拉取。
 
 ::github{repo="Fabrizz/MMM-OnSpotify"}
 
-Create a GitHub repository card with the code `::github{repo="<owner>/<repo>"}`.
+使用代码 `::github{repo="<owner>/<repo>"}` 创建 GitHub 仓库卡片。
 
 ```markdown
 ::github{repo="saicaca/fuwari"}
 ```
 
-## Mermaid Diagrams
+## Mermaid 图表
 
-Fenced `mermaid` blocks are rendered as diagrams and follow the active color scheme.
+围栏 `mermaid` 代码块会渲染为图表，并遵循当前激活的配色方案。
 
 ```mermaid
 flowchart LR
@@ -588,31 +588,31 @@ flowchart LR
     C --> D[Themed diagram]
 ```
 
-## Admonitions
+## 提示框
 
-Following types of admonitions are supported: `note` `tip` `important` `warning` `caution`
+支持以下类型的提示框：`note` `tip` `important` `warning` `caution`
 
 :::note
-Highlights information that users should take into account, even when skimming.
+高亮那些用户即使快速浏览也应该留意的信息。
 :::
 
 :::tip
-Optional information to help a user be more successful.
+帮助用户取得更好效果的可选信息。
 :::
 
 :::important
-Crucial information necessary for users to succeed.
+用户成功所必需的关键信息。
 :::
 
 :::warning
-Critical content demanding immediate user attention due to potential risks.
+由于潜在风险而需要用户立即关注的关键内容。
 :::
 
 :::caution
-Negative potential consequences of an action.
+某个操作可能带来的负面后果。
 :::
 
-### Basic Syntax
+### 基本语法
 
 ```markdown
 :::note
@@ -624,12 +624,12 @@ Optional information to help a user be more successful.
 :::
 ```
 
-### Custom Titles
+### 自定义标题
 
-The title of the admonition can be customized.
+提示框的标题可以自定义。
 
-:::note[MY CUSTOM TITLE]
-This is a note with a custom title.
+:::note[我的自定义标题]
+这是一个带自定义标题的提示框。
 :::
 
 ```markdown
@@ -638,10 +638,10 @@ This is a note with a custom title.
 :::
 ```
 
-### GitHub Syntax
+### GitHub 语法
 
 > [!TIP]
-> [The GitHub syntax](https://github.com/orgs/community/discussions/16925) is also supported.
+> [GitHub 语法](https://github.com/orgs/community/discussions/16925) 同样受支持。
 
 ```
 > [!NOTE]
@@ -651,20 +651,20 @@ This is a note with a custom title.
 > The GitHub syntax is also supported.
 ```
 
-### Spoiler
+### 剧透（Spoiler）
 
-You can add spoilers to your text. The text also supports **Markdown** syntax.
+你可以为文本添加剧透遮罩。该文本同样支持 **Markdown** 语法。
 
-The content :spoiler[is hidden **ayyy**]!
+内容 :spoiler[被隐藏了 **ayyy**]！
 
 ```markdown
 The content :spoiler[is hidden **ayyy**]!
 
 ```
 
-## Image Widths and Captions
+## 图片宽度与标题
 
-A standalone image accepts an optional `w-N%` width token in its alt text and a Markdown title rendered as a centered caption below the image:
+独立图片可以在其 alt 文本中接受一个可选的 `w-N%` 宽度令牌，并使用一个渲染在图片下方居中显示的 Markdown 标题作为说明：
 
 ![Album example image w-50%](/images/albums/AcgExample/07.webp "Half-width image with a caption")
 
@@ -672,7 +672,7 @@ A standalone image accepts an optional `w-N%` width token in its alt text and a 
 ![Image description w-50%](./image.webp "Visible caption")
 ```
 
-Valid widths range from `w-1%` to `w-100%`; invalid tokens stay in the alt text. The width and the caption are independent — a title alone also produces a caption:
+有效宽度范围从 `w-1%` 到 `w-100%`；无效令牌会保留在 alt 文本中。宽度和标题相互独立 —— 仅提供标题也会生成说明：
 
 ![Album example image w-75%](/images/albums/AcgExample/08.webp)
 
@@ -682,7 +682,7 @@ Valid widths range from `w-1%` to `w-100%`; invalid tokens stay in the alt text.
 
 ## markdown-fields.md
 
-Use `field-group` when several related options belong to the same API or component. Put the field name on the opening line, then add metadata tags before the description.
+当多个相关选项属于同一 API 或组件时，请使用 `field-group`。把字段名放在开头一行，然后在描述之前添加元数据标签。
 
 :::: field-group
 
@@ -690,7 +690,7 @@ Use `field-group` when several related options belong to the same API or compone
 @type object
 @optional
 
-TeX parser options.
+TeX 解析器选项。
 :::
 
 ::: field output
@@ -698,14 +698,14 @@ TeX parser options.
 @default `'svg'`
 @optional
 
-Output format, SVG or generic HTML.
+输出格式，SVG 或通用 HTML。
 :::
 
 ::::
 
-## Basic Fields
+## 基本字段
 
-Required, optional, and deprecated statuses can be mixed in one group. Default values are kept separate from the type so they remain easy to scan.
+必填、可选和已弃用三种状态可以混合在同一个组中。默认值与类型分开存放，便于快速扫读。
 
 :::: field-group
 
@@ -713,7 +713,7 @@ Required, optional, and deprecated statuses can be mixed in one group. Default v
 @type string
 @required
 
-The visible title of the component. This value is shown in the page heading and should be short enough to scan quickly.
+组件的可见标题。该值会显示在页面标题中，应当足够简短，便于快速扫读。
 :::
 
 ::: field disabled
@@ -721,7 +721,7 @@ The visible title of the component. This value is shown in the page heading and 
 @default `false`
 @optional
 
-Whether the control starts in a disabled state.
+控件是否以禁用状态启动。
 :::
 
 ::: field locale
@@ -729,14 +729,14 @@ Whether the control starts in a disabled state.
 @default `'en'`
 @optional
 
-Locale used for formatting dates, numbers, and accessible labels.
+用于格式化日期、数字和无障碍标签的语言环境。
 :::
 
 ::::
 
-## Rich Descriptions
+## 富文本描述
 
-Descriptions are ordinary Markdown. Links, emphasis, lists, and inline code remain available after the metadata lines.
+描述就是普通的 Markdown。在元数据行之后，链接、强调、列表和行内代码仍然可用。
 
 :::: field-group
 
@@ -744,10 +744,10 @@ Descriptions are ordinary Markdown. Links, emphasis, lists, and inline code rema
 @type `(value: unknown) => string`
 @required
 
-Render a value into the final output. The callback should return a **safe string** and may use the `formatValue` helper.
+将值渲染为最终输出。回调应返回一个**安全字符串**，并且可以使用 `formatValue` 辅助函数。
 
-- Keep rendering deterministic.
-- Avoid network requests inside the callback.
+- 保持渲染具有确定性。
+- 避免在回调内发起网络请求。
 :::
 
 ::: field retries
@@ -755,52 +755,52 @@ Render a value into the final output. The callback should return a **safe string
 @default `3`
 @optional
 
-Maximum number of attempts before the request is reported as failed.
+在请求被报告为失败之前，最大尝试次数。
 :::
 
 ::: field legacyMode
 @type boolean
 @deprecated
 
-Kept for backwards compatibility. New integrations should use `compatibility` instead.
+为向后兼容而保留。新的集成应改用 `compatibility`。
 :::
 
 ::::
 
-## Standalone Field
+## 独立字段
 
-A single field can be used without a group when documenting one option next to an example or code block.
+当需要在示例或代码块旁边记录单个选项时，可以不使用组，单独使用一个字段。
 
 ::: field format
 @type `'short' | 'long'`
 @default `'short'`
 @optional
 
-Controls how the result is formatted.
+控制结果的格式化方式。
 :::
 
-## Authoring Notes
+## 编写说明
 
-- `@type` and `@default` values are rendered as code tokens.
-- `@required`, `@optional`, and `@deprecated` add a status badge.
-- Any normal Markdown after the metadata becomes the field description.
-- Unknown `@tags` remain visible as description text instead of being discarded.
+- `@type` 和 `@default` 的值会渲染为代码令牌。
+- `@required`、`@optional` 和 `@deprecated` 会添加一个状态徽标。
+- 元数据之后的任何普通 Markdown 都会成为字段描述。
+- 未知的 `@tags` 会作为描述文本保留可见，而不会被丢弃。
 
 ---
 
 ## markdown-abbreviations.md
 
-Abbreviations keep technical writing compact while preserving the full term for readers who need it. A defined term renders as a native `abbr` element with its meaning available on hover and to assistive technology.
+缩写让技术写作保持紧凑，同时为有需要的读者保留完整的术语。已定义的术语会渲染为原生的 `abbr` 元素，其含义可在悬停时查看，并可供辅助技术获取。
 
-## In context
+## 在上下文中
 
-SSR-first output keeps the initial document visible before JavaScript runs. When measuring its reading experience, LCP and CLS reveal whether the first visible content is fast and stable.
+SSR 优先的输出在 JavaScript 运行之前就让初始文档可见。在衡量其阅读体验时，LCP 和 CLS 可以揭示首个可见内容是否快速且稳定。
 
-An abbreviation can also appear next to ordinary Markdown such as **SSR** guidance, but literal code such as `SSR` and links like [LCP documentation](https://web.dev/articles/lcp) remain untouched.
+缩写也可以出现在 **SSR** 指南这类普通 Markdown 旁边，但诸如 `SSR` 这样的字面代码以及 [LCP 文档](https://web.dev/articles/lcp) 之类的链接则保持不变。
 
-## Define terms
+## 定义术语
 
-Place definitions anywhere in the same Markdown document. They do not render as visible paragraphs, and only matching terms in that article receive the semantic abbreviation treatment.
+可以在同一份 Markdown 文档的任意位置放置定义。它们不会渲染为可见段落，只有该文章中匹配的术语才会获得语义化的缩写处理。
 
 ```markdown
 *[SSR]: Server-Side Rendering
@@ -814,19 +814,19 @@ SSR makes an HTML response available before client code runs.
 *[LCP]: Largest Contentful Paint
 *[CLS]: Cumulative Layout Shift
 
-## Authoring boundaries
+## 编写边界
 
-Terms must begin with a letter or number and may contain letters, numbers, periods, underscores, plus signs, and hyphens. Each definition applies to the current article only; an invalid or duplicate definition remains ordinary Markdown instead of silently replacing another term.
+术语必须以字母或数字开头，并且可以包含字母、数字、句点、下划线、加号和连字符。每个定义仅适用于当前文章；无效或重复的定义仍保持普通 Markdown，而不会静默替换其他术语。
 
 ---
 
-## Markdown File Includes
+## Markdown 文件包含
 
-Shirone can include a local Markdown file or a safe slice of one.
+Shirone 可以包含一个本地 Markdown 文件，或者其中安全的一部分。
 
 <!-- @include: src/content/snippets/include-example.md#public-api -->
 
-The full file and line-range forms are also supported:
+同样支持整个文件和行范围两种形式：
 
 ```markdown
 <!-- @include: src/content/snippets/include-example.md -->
@@ -835,17 +835,17 @@ The full file and line-range forms are also supported:
 <!-- @include: src/content/snippets/include-example.md{-4} -->
 ```
 
-Include comments inside fenced code remain literal.
+围栏代码块内的 include 注释保持原样。
 
 ---
 
 ## markdown-mermaid.md
 
-Mermaid turns text descriptions in Markdown into diagrams. The examples below use Shirone's content workflow to demonstrate diagram types commonly used in technical articles and project notes.
+Mermaid 把 Markdown 中的文本描述转换为图表。下面的示例使用 Shirone 的内容工作流，来演示技术文章和项目笔记中常用的图表类型。
 
-## Flowchart
+## 流程图
 
-Flowcharts describe a process, including decisions and paths that return to an earlier step.
+流程图描述一个过程，包括决策以及返回先前步骤的路径。
 
 ```mermaid
 flowchart TD
@@ -859,9 +859,9 @@ flowchart TD
     Build --> Publish[Publish]
 ```
 
-## Sequence Diagram
+## 时序图
 
-Sequence diagrams present collaboration between participants in chronological order. This example follows a Swup navigation from request to Mermaid rendering.
+时序图按时间顺序呈现参与者之间的协作。这个示例跟踪了一次 Swup 导航从请求到 Mermaid 渲染的整个过程。
 
 ```mermaid
 sequenceDiagram
@@ -880,9 +880,9 @@ sequenceDiagram
     Renderer-->>Browser: Insert themed SVGs
 ```
 
-## Entity Relationship Diagram
+## 实体关系图
 
-Entity relationship diagrams model structured data and the connections between authors, posts, tags, and comments.
+实体关系图对结构化数据以及作者、文章、标签和评论之间的联系进行建模。
 
 ```mermaid
 erDiagram
@@ -917,9 +917,9 @@ erDiagram
     }
 ```
 
-## Class Diagram
+## 类图
 
-Class diagrams communicate responsibilities, public methods, and dependency directions in a software design.
+类图表达软件设计中的职责、公开方法以及依赖方向。
 
 ```mermaid
 classDiagram
@@ -948,9 +948,9 @@ classDiagram
     DiagramRenderer --> ThemeTokens : reads
 ```
 
-## State Diagram
+## 状态图
 
-State diagrams show the lifecycle of an object and the events that move it between states.
+状态图展示对象的生命周期以及使它在状态之间移动的事件。
 
 ```mermaid
 stateDiagram-v2
@@ -965,9 +965,9 @@ stateDiagram-v2
     Archived --> [*]
 ```
 
-## XY Chart
+## XY 图表
 
-XY charts combine bars and lines to compare values and trends over a shared axis.
+XY 图表结合柱状图和折线图，在共享坐标轴上比较数值和趋势。
 
 ```mermaid
 xychart-beta
@@ -980,9 +980,9 @@ xychart-beta
     line [48, 55, 62, 61, 73, 81]
 ```
 
-## Pie Chart
+## 饼图
 
-Pie charts provide a compact comparison of how categories contribute to a whole.
+饼图提供了一种紧凑的比较方式，展示各个类别如何构成一个整体。
 
 ```mermaid
 pie showData
@@ -995,9 +995,9 @@ pie showData
     "Essays" : 15
 ```
 
-## Gantt Chart
+## 甘特图
 
-Gantt charts arrange tasks, dependencies, and milestones along a calendar timeline.
+甘特图将任务、依赖关系和里程碑沿日历时间轴排列。
 
 ```mermaid
 gantt
@@ -1017,9 +1017,9 @@ gantt
     Release :milestone, release, after tests, 0d
 ```
 
-## Mind Map
+## 思维导图
 
-Mind maps expand a central topic into related areas and supporting concepts.
+思维导图将一个中心主题展开为相关的领域和支撑概念。
 
 ```mermaid
 mindmap
@@ -1038,9 +1038,9 @@ mindmap
       Accessibility
 ```
 
-## Timeline
+## 时间线
 
-Timelines summarize significant events or phases without requiring exact calendar durations.
+时间线概括重要事件或阶段，而无需精确的日历时长。
 
 ```mermaid
 timeline
@@ -1053,9 +1053,9 @@ timeline
                 : Verify responsive and accessible output
 ```
 
-## User Journey
+## 用户旅程
 
-User journey diagrams combine actions, participants, and experience scores across the stages of a task.
+用户旅程图将任务各阶段中的动作、参与者和体验评分结合起来。
 
 ```mermaid
 journey
@@ -1073,9 +1073,9 @@ journey
       Bookmark the page: 3: Reader
 ```
 
-## Git Graph
+## Git 图
 
-Git graphs show how work progresses on a feature branch before it merges into the main line.
+Git 图展示工作如何在功能分支上推进，直到它合并回主线。
 
 ```mermaid
 gitGraph
@@ -1091,9 +1091,9 @@ gitGraph
     commit id: "release"
 ```
 
-## Kanban Board
+## 看板
 
-Kanban boards group tasks by workflow state to make current progress easy to scan.
+看板按工作流状态对任务进行分组，使当前进度一目了然。
 
 ```mermaid
 kanban
@@ -1107,9 +1107,9 @@ kanban
     rendering[Client rendering]
 ```
 
-## Sankey Diagram
+## 桑基图
 
-Sankey diagrams use link width to show how traffic or another quantity flows between nodes.
+桑基图使用连线宽度来展示流量或其他数量如何在节点之间流动。
 
 ```mermaid
 sankey-beta
@@ -1120,55 +1120,55 @@ Reading,Topics,210
 Reading,Outbound,140
 ```
 
-Each example uses a standard `mermaid` code fence. The server preserves readable source markup, and the browser enhances it into an SVG that follows the active theme. Diagrams render again when the theme changes or when Swup navigates to this article.
+每个示例都使用标准的 `mermaid` 代码围栏。服务器保留可读的源码标记，浏览器将其增强为遵循当前主题的 SVG。当主题变化或 Swup 导航到本文时，图表会重新渲染。
 
 ---
 
 ## admonitions.md
 
-Admonitions keep supporting information visually distinct while preserving the article's reading flow. Every form is rendered on the server and uses the same compact M3E component.
+提示框让辅助信息在视觉上更突出，同时保留文章的阅读流畅性。每一种形式都在服务器上渲染，并使用相同的紧凑 M3E 组件。
 
-## Semantic variants
+## 语义变体
 
-::: note Deployment context
-The spaced form accepts a plain custom title while remaining compatible with the reference syntax.
+::: note 部署上下文
+带空格的格式接受一个普通自定义标题，同时保持与参考语法兼容。
 :::
 
 :::info
-Use information blocks for neutral context that helps readers understand the surrounding section.
+使用信息块提供中性上下文，帮助读者理解周围的小节。
 :::
 
-:::tip[Existing **label** syntax]
-The original bracket label remains available and can contain inline Markdown emphasis.
+:::tip[现有的 **label** 语法]
+原来的方括号标签仍然可用，并且可以包含行内 Markdown 强调。
 :::
 
 > [!IMPORTANT]
-> GitHub Alert syntax enters the same renderer, so existing articles keep one visual language.
+> GitHub Alert 语法进入同一个渲染器，因此现有文章保持统一的视觉语言。
 
 :::warning
-Check environment variables before running a production build.
+在运行生产构建之前，请检查环境变量。
 :::
 
 :::caution
-Do not publish credentials, local configuration, or private keys with an example.
+不要随示例一起发布凭证、本地配置或私钥。
 :::
 
-## Optional details
+## 可选详情
 
-::: details Inspect the complete command
-The disclosure uses native browser semantics and remains keyboard accessible without client JavaScript.
+::: details 查看完整命令
+该折叠内容使用原生浏览器语义，并且无需客户端 JavaScript 即可通过键盘访问。
 
 ```powershell
 npx.cmd astro check
 pnpm.cmd build
 ```
 
-- It starts closed.
-- Long code can scroll inside its own code block.
-- The container remains within the article width on narrow screens.
+- 它默认处于关闭状态。
+- 较长的代码可以在其自身的代码块内滚动。
+- 在窄屏幕上，容器仍保持在文章宽度之内。
 :::
 
-## Author syntax
+## 编写语法
 
 ```markdown
 :::note[Existing title syntax]
@@ -1191,52 +1191,52 @@ Hidden until the reader opens it.
 
 ## collapse-panels.md
 
-Collapse panels keep related optional details in one compact group. Titles and bodies retain inline and block Markdown, while native disclosure semantics make every panel usable without client JavaScript.
+折叠面板将相关的可选详情收纳在一个紧凑的分组中。标题和正文保留行内及块级 Markdown，而原生的折叠语义让每个面板无需客户端 JavaScript 即可使用。
 
-## Independent panels
+## 独立面板
 
-Items open independently by default. Prefix a title with `:+` to open that item initially or `:-` to keep it closed when the group uses `expand`.
+默认情况下，各条目独立展开。在标题前加上 `:+` 可使该项初始即展开，或加上 `:-` 使该组使用 `expand` 时该项保持关闭。
 
 ::: collapse
-- **Package requirements**
+- **包依赖要求**
 
-  Use Node.js 22 or newer and enable Corepack before installing packages.
+  使用 Node.js 22 或更高版本，并在安装包之前启用 Corepack。
 
-- :+ Install dependencies
+- :+ 安装依赖
 
-  Run the workspace package command from the repository root.
+  从仓库根目录运行工作区的包命令。
 
   ```powershell
   pnpm.cmd install
   ```
 
-- Validation commands
+- 校验命令
 
-  Check the content pipeline before building the production output.
+  在构建生产输出之前检查内容管道。
 
   - `pnpm.cmd check:manifest`
   - `npx.cmd astro check`
 :::
 
-## Accordion mode
+## 手风琴模式
 
-Add `accordion` when only one answer should remain open. The browser groups the native disclosures directly, so opening another item closes the previous one without hydration.
+当只应保持一个答案展开时，添加 `accordion`。浏览器会直接对原生折叠控件进行分组，因此展开另一项会关闭前一项，而无需水合。
 
 ::: collapse accordion expand
-- What does `expand` do here?
+- `expand` 在这里有什么作用？
 
-  It opens the first item initially when no item has a `:+` marker.
+  当没有任何条目带有 `:+` 标记时，它会在初始时展开第一个条目。
 
-- Can a title contain Markdown?
+- 标题可以包含 Markdown 吗？
 
-  Yes. Titles support inline **emphasis** and `code`, while panel bodies support full block Markdown.
+  可以。标题支持行内 **强调** 和 `code`，而面板正文支持完整的块级 Markdown。
 
-- What happens on a narrow screen?
+- 在窄屏幕上会发生什么？
 
-  Content padding becomes compact, long text wraps, and embedded code keeps its own horizontal scrolling area.
+  内容内边距变得更紧凑，长文本会换行，嵌入的代码保持其自身的水平滚动区域。
 :::
 
-## Author syntax
+## 编写语法
 
 ````markdown
 ::: collapse accordion
@@ -1250,51 +1250,51 @@ Add `accordion` when only one answer should remain open. The browser groups the 
 :::
 ````
 
-The container must contain exactly one top-level unordered list. Every item needs a title paragraph, a blank line, and body content. Invalid or mixed input remains an ordinary readable Markdown list.
+容器必须恰好包含一个顶层无序列表。每个条目都需要一个标题段落、一个空行以及正文内容。无效或混合的输入会保持为普通的可读 Markdown 列表。
 
 ---
 
 ## spoilers.md
 
-Spoilers conceal a short answer or plot detail without removing it from the document. Hover, focus, or activate the native control to reveal the content.
+剧透（Spoiler）会隐藏简短的答案或剧情细节，而不会将其从文档中移除。悬停、聚焦或激活原生控件即可显示内容。
 
-## Inline details
+## 行内详情
 
-The answer is :spoiler[**42**], and this sentence remains ordinary Markdown around it.
+答案是 :spoiler[**42**]，而其周围的这句话仍是普通 Markdown。
 
-Spoilers can include `inline code` and :spoiler[a longer detail with **emphasis**].
+剧透可以包含 `inline code` 以及 :spoiler[带 **强调** 的更长详情]。
 
-## Author syntax
+## 编写语法
 
 ```markdown
 The answer is :spoiler[42].
 ```
 
-The generated HTML uses a native button with an `aria-expanded` state. Without JavaScript, hover and focus still reveal the text; the optional runtime adds click and keyboard toggling.
+生成的 HTML 使用带有 `aria-expanded` 状态的原生按钮。在没有 JavaScript 的情况下，悬停和聚焦仍可显示文本；可选运行时会增加点击和键盘切换。
 
 ---
 
 ## marker-highlights.md
 
-Marker highlights bring attention to a specific phrase without turning the surrounding paragraph into a separate component. They render as native `<mark>` elements during the build and inherit the active M3E color system.
+标记高亮用于突出某个特定短语，而无需把周围的段落变成独立的组件。它们在构建期间渲染为原生的 `<mark>` 元素，并继承当前激活的 M3E 色彩系统。
 
-## Default emphasis
+## 默认强调
 
-Use `==text==` when the article's primary color should carry the emphasis. This is useful for ==one decision that readers should retain== while they continue through an ordinary paragraph.
+当文章的主色应承载这种强调时，使用 `==text==`。当读者继续阅读普通段落时，用它来突出 ==一个读者应当记住的决定== 会很有用。
 
-The marker may contain ==nested **Markdown emphasis**== when the phrase needs a stronger hierarchy.
+当短语需要更强的层级时，标记可以包含 ==嵌套的 **Markdown 强调**==。
 
-## Semantic colors
+## 语义色彩
 
-Use a suffix when the meaning needs a different tonal role. The available variants are `primary`, `secondary`, `tertiary`, `error`, and `tip`.
+当含义需要不同的色调角色时，使用后缀。可用的变体有 `primary`、`secondary`、`tertiary`、`error` 和 `tip`。
 
-- ==Primary connects the phrase to the active theme=={.primary}
-- ==Secondary keeps a supporting distinction quiet=={.secondary}
-- ==Tertiary adds a separate editorial signal=={.tertiary}
-- ==Error identifies a condition that needs correction=={.error}
-- ==Tip highlights practical guidance=={.tip}
+- ==Primary 将该短语与当前主题连接起来=={.primary}
+- ==Secondary 让支撑性的区分保持低调=={.secondary}
+- ==Tertiary 添加一个独立的编辑信号=={.tertiary}
+- ==Error 标识需要纠正的状况=={.error}
+- ==Tip 突出实用指导=={.tip}
 
-## Author syntax
+## 编写语法
 
 ```markdown
 ==Primary marker==
@@ -1305,17 +1305,17 @@ Use a suffix when the meaning needs a different tonal role. The available varian
 ==Tip marker=={.tip}
 ```
 
-Inline code such as `==literal marker syntax==` and fenced examples stay literal, so documentation can explain the syntax without triggering it.
+诸如 `==literal marker syntax==` 这样的行内代码和围栏示例保持字面量，因此文档可以在解释语法时不触发它。
 
 ---
 
 ## steps.md
 
-Use Steps for procedures whose order matters. The component keeps the article reading flow intact: a quiet numbered rail provides orientation while headings, paragraphs, links, lists, and code retain their native Markdown roles.
+对于顺序很重要的流程，请使用步骤（Steps）。该组件保持文章的阅读流畅性不变：一条低调的编号轨道提供方向指引，而标题、段落、链接、列表和代码则保留其原生的 Markdown 角色。
 
-## Ordered list syntax
+## 有序列表语法
 
-Wrap one Markdown ordered list in a `:::steps` container. Each top-level list item becomes one step.
+将一个 Markdown 有序列表包裹在 `:::steps` 容器中。每个顶层列表项都会成为一个步骤。
 
 ````markdown
 :::steps[Production deployment]
@@ -1355,64 +1355,64 @@ Wrap one Markdown ordered list in a `:::steps` container. Each top-level list it
 :::
 ````
 
-:::steps[Production deployment]
-1. **Clone and prepare the workspace**
+:::steps[生产部署]
+1. **克隆并准备工作区**
 
-   Clone the repository and enter the project directory.
+   克隆仓库并进入项目目录。
 
    ```powershell
    git clone https://github.com/LyraVoid/Shirone.git
    Set-Location Shirone
    ```
 
-2. **Install dependencies**
+2. **安装依赖**
 
-   Use the repository's pinned package manager.
+   使用仓库锁定的包管理器。
 
    ```powershell
    pnpm.cmd install
    ```
 
-3. **Run project checks**
+3. **运行项目检查**
 
-   Confirm Astro diagnostics and TypeScript checks pass.
+   确认 Astro 诊断和 TypeScript 检查通过。
 
    ```powershell
    npx.cmd astro check
    pnpm.cmd type-check
    ```
 
-4. **Build the production site**
+4. **构建生产站点**
 
-   Generate the static site and search index.
+   生成静态站点和搜索索引。
 
    ```powershell
    pnpm.cmd build
    ```
 :::
 
-## Options
+## 选项
 
-- `:::steps[Title]` or `title="Title"` adds a visible label and accessible name.
-- `start=4` changes the first displayed step number.
-- The container must contain exactly one ordered list. Invalid or mixed input remains ordinary readable Markdown instead of being interpreted heuristically.
-- Rendering is completed during the site build and adds no client JavaScript or network requests.
+- `:::steps[Title]` 或 `title="Title"` 会添加一个可见标签和无障碍名称。
+- `start=4` 会更改第一个显示的步骤编号。
+- 容器必须恰好包含一个有序列表。无效或混合的输入会保持为普通的可读 Markdown，而不会被启发式地解释。
+- 渲染在站点构建期间完成，不添加任何客户端 JavaScript 或网络请求。
 
 ---
 
 ## option-groups.md
 
-Option groups keep equivalent instructions together without repeating the surrounding explanation. Each option accepts full block Markdown, while the selected value can synchronize with another group on the same page.
+选项组把等价的说明放在一起，而无需重复周围的解释。每个选项都接受完整的块级 Markdown，而选中的值可以与同一页面上的另一个组保持同步。
 
-## Choose a package manager
+## 选择一个包管理器
 
-Use `@tab:active` to select the initial option. A suffix after `#` supplies a stable value without changing the visible title.
+使用 `@tab:active` 选择初始选项。`#` 后面的后缀提供一个稳定的值，而不会更改可见标题。
 
 ::: tabs#package-manager
 
 @tab npm
 
-Install the package with npm:
+使用 npm 安装该包：
 
 ```powershell
 npm install astro
@@ -1420,7 +1420,7 @@ npm install astro
 
 @tab:active **pnpm**#pnpm
 
-Install the package with pnpm:
+使用 pnpm 安装该包：
 
 ```powershell
 pnpm.cmd add astro
@@ -1428,7 +1428,7 @@ pnpm.cmd add astro
 
 @tab Bun#bun
 
-Install the package with Bun:
+使用 Bun 安装该包：
 
 ```powershell
 bun add astro
@@ -1436,9 +1436,9 @@ bun add astro
 
 :::
 
-## Run the project
+## 运行项目
 
-This group shares the `package-manager` id. Selecting an option above updates the matching command below and remembers that choice for the next visit.
+该组共享 `package-manager` id。在上方选择一个选项会更新下方匹配的命令，并记住该选择以供下次访问。
 
 ::: tabs#package-manager
 
@@ -1462,35 +1462,35 @@ bun run dev
 
 :::
 
-## Many alternatives
+## 多个备选方案
 
-Longer option rows remain on one line and scroll within their own navigation area on narrow screens.
+较长的选项行保持在一行内，并在窄屏幕上于其自身的导航区域内滚动。
 
 ::: tabs
 
-@tab Local workstation
+@tab 本地工作站
 
-Use the local toolchain while developing a feature.
+在开发某个功能时使用本地工具链。
 
-@tab Hosted preview environment
+@tab 托管预览环境
 
-Publish a temporary preview for review.
+发布临时预览以供审阅。
 
-@tab Continuous integration
+@tab 持续集成
 
-Run deterministic validation for every change.
+对每次变更运行确定性的校验。
 
-@tab Production deployment
+@tab 生产部署
 
-Promote a verified artifact to production.
+将经过验证的产物提升到生产环境。
 
-@tab Offline recovery workflow
+@tab 离线恢复工作流
 
-Restore from a local artifact when the network is unavailable.
+当网络不可用时，从本地产物恢复。
 
 :::
 
-## Author syntax
+## 编写语法
 
 ````markdown
 ::: tabs#package-manager
@@ -1506,17 +1506,17 @@ Use pnpm instructions here.
 :::
 ````
 
-Each group needs at least two `@tab` sections, and every section needs body content separated from its marker by a blank line. Invalid or incomplete groups remain readable as ordinary Markdown.
+每个组至少需要两个 `@tab` 小节，并且每个小节都需要有正文内容，并用空行与标记分隔。无效或不完整的组会保持为普通的可读 Markdown。
 
 ---
 
 ## content-annotations.md
 
-Content annotations keep supporting context close to a sentence without placing it directly in the reading flow. Activate the small note marker to reveal its content.
+内容注解让辅助性上下文紧贴某个句子，而无需把它直接放进阅读流程中。激活小的注释标记即可显示其内容。
 
-## Basic syntax
+## 基本语法
 
-Add a `[+label]` reference in ordinary prose, then define the matching note elsewhere in the same article.
+在普通行文中添加一个 `[+label]` 引用，然后在同一篇文章的其他位置定义匹配的注释。
 
 ```markdown
 Astro renders most of a page ahead of time and hydrates **interactive islands** [+islands] only when they need to become interactive.
@@ -1525,53 +1525,53 @@ Astro renders most of a page ahead of time and hydrates **interactive islands** 
   An island is an interactive UI component surrounded by static HTML. This keeps the default page lightweight while preserving focused interactivity.
 ```
 
-Astro renders most of a page ahead of time and hydrates **interactive islands** [+islands] only when they need to become interactive.
+Astro 会提前渲染页面的大部分内容，并且只在需要变得可交互时才对**交互式孤岛** [+islands] 进行水合。
 
 [+islands]:
-  An island is an interactive UI component surrounded by static HTML. This keeps the default page lightweight while preserving focused interactivity.
+  孤岛是被静态 HTML 包围的交互式 UI 组件。这样可以让默认页面保持轻量，同时保留聚焦的交互性。
 
-## Rich content
+## 富文本内容
 
-Definitions may contain paragraphs, emphasis, links, lists, and inline code [+rich-note] while the surrounding sentence continues normally.
+定义可以包含段落、强调、链接、列表和行内代码 [+rich-note]，同时周围的句子继续正常书写。
 
 [+rich-note]:
-  **Authoring guidance**
+  **编写指导**
 
-  - Keep the first sentence self-contained.
-  - Use a link when readers may need the primary source.
-  - Prefer concise examples such as `client:visible`.
+  - 让第一句话自成一体。
+  - 当读者可能需要原始来源时，使用链接。
+  - 优先使用简洁的示例，例如 `client:visible`。
 
-  See the [Astro islands documentation](https://docs.astro.build/en/concepts/islands/) for the full model.
+  完整模型请参阅 [Astro islands 文档](https://docs.astro.build/en/concepts/islands/)。
 
-## Multiple definitions
+## 多个定义
 
-Reuse a label [+review] to present a short sequence of related notes behind one marker.
+复用标签 [+review] 可以在一个标记后面呈现一串简短的关联注释。
 
-[+review]: Start with the decision that changes the reader's next action.
-[+review]: Keep implementation evidence separate from background context.
-[+review]: Remove details that belong in the main article instead of the annotation.
+[+review]: 从改变读者下一步行动的那个决定开始。
+[+review]: 把实现证据与背景上下文分开。
+[+review]: 删除那些本应属于正文而不是注解的细节。
 
-Undefined references such as `[+missing]` remain ordinary text, so an unfinished definition never creates an empty control.
+诸如 `[+missing]` 这样的未定义引用保持为普通文本，因此未完成的定义永远不会创建一个空控件。
 
 ---
 
 ## expressive-code.md
 
-Here, we'll explore how code blocks look using [Expressive Code](https://expressive-code.com/). The provided examples are based on the official documentation, which you can refer to for further details.
+在这里，我们将探索使用 [Expressive Code](https://expressive-code.com/) 时代码块的外观。所提供示例基于官方文档，如需更多详情，可参考官方文档。
 
 ## Expressive Code
 
-### Syntax Highlighting
+### 语法高亮
 
-[Syntax Highlighting](https://expressive-code.com/key-features/syntax-highlighting/)
+[语法高亮](https://expressive-code.com/key-features/syntax-highlighting/)
 
-#### Regular syntax highlighting
+#### 常规语法高亮
 
 ```js
 console.log('This code is syntax highlighted!')
 ```
 
-#### Rendering ANSI escape sequences
+#### 渲染 ANSI 转义序列
 
 ```ansi
 ANSI colors:
@@ -1590,11 +1590,11 @@ Full RGB colors:
 Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
 ```
 
-### Editor & Terminal Frames
+### 编辑器与终端框架
 
-[Editor & Terminal Frames](https://expressive-code.com/key-features/frames/)
+[编辑器与终端框架](https://expressive-code.com/key-features/frames/)
 
-#### Code editor frames
+#### 代码编辑器框架
 
 ```js title="my-test-file.js"
 console.log('Title attribute example')
@@ -1607,7 +1607,7 @@ console.log('Title attribute example')
 <div>File name comment example</div>
 ```
 
-#### Terminal frames
+#### 终端框架
 
 ```bash
 echo "This terminal frame has no title"
@@ -1619,7 +1619,7 @@ echo "This terminal frame has no title"
 Write-Output "This one has a title!"
 ```
 
-#### Overriding frame types
+#### 覆盖框架类型
 
 ```sh frame="none"
 echo "Look ma, no frame!"
@@ -1633,11 +1633,11 @@ function Watch-Tail { Get-Content -Tail 20 -Wait $args }
 New-Alias tail Watch-Tail
 ```
 
-### Text & Line Markers
+### 文本与行标记
 
-[Text & Line Markers](https://expressive-code.com/key-features/text-markers/)
+[文本与行标记](https://expressive-code.com/key-features/text-markers/)
 
-#### Marking full lines & line ranges
+#### 标记整行和行范围
 
 ```js {1, 4, 7-8}
 // Line 1 - targeted by line number
@@ -1650,7 +1650,7 @@ New-Alias tail Watch-Tail
 // Line 8 - targeted by range "7-8"
 ```
 
-#### Selecting line marker types (mark, ins, del)
+#### 选择行标记类型（mark、ins、del）
 
 ```js title="line-markers.js" del={2} ins={3-4} {6}
 function demo() {
@@ -1662,7 +1662,7 @@ function demo() {
 }
 ```
 
-#### Adding labels to line markers
+#### 为行标记添加标签
 
 ```jsx {"1":5} del={"2":7-8} ins={"3":10-12}
 // labeled-line-markers.jsx
@@ -1680,7 +1680,7 @@ function demo() {
 </button>
 ```
 
-#### Adding long labels on their own lines
+#### 在独立行上添加长标签
 
 ```jsx {"1. Provide the value prop here:":5-6} del={"2. Remove the disabled and active states:":8-10} ins={"3. Add this to render the children inside the button:":12-15}
 // labeled-line-markers.jsx
@@ -1701,7 +1701,7 @@ function demo() {
 </button>
 ```
 
-#### Using diff-like syntax
+#### 使用类 diff 语法
 
 ```diff
 +this line will be marked as inserted
@@ -1720,7 +1720,7 @@ this is a regular line
  no whitespace will be removed either
 ```
 
-#### Combining syntax highlighting with diff-like syntax
+#### 结合语法高亮与类 diff 语法
 
 ```diff lang="js"
   function thisIsJavaScript() {
@@ -1731,7 +1731,7 @@ this is a regular line
   }
 ```
 
-#### Marking individual text inside lines
+#### 标记行内的单个文本
 
 ```js "given text"
 function demo() {
@@ -1740,19 +1740,19 @@ function demo() {
 }
 ```
 
-#### Regular expressions
+#### 正则表达式
 
 ```ts /ye[sp]/
 console.log('The words yes and yep will be marked.')
 ```
 
-#### Escaping forward slashes
+#### 转义正斜杠
 
 ```sh /\/ho.*\//
 echo "Test" > /home/test.txt
 ```
 
-#### Selecting inline marker types (mark, ins, del)
+#### 选择行内标记类型（mark、ins、del）
 
 ```js "return true;" ins="inserted" del="deleted"
 function demo() {
@@ -1762,11 +1762,11 @@ function demo() {
 }
 ```
 
-### Word Wrap
+### 自动换行
 
-[Word Wrap](https://expressive-code.com/key-features/word-wrap/)
+[自动换行](https://expressive-code.com/key-features/word-wrap/)
 
-#### Configuring word wrap per block
+#### 按代码块配置自动换行
 
 ```js wrap
 // Example with wrap
@@ -1784,7 +1784,7 @@ function getLongString() {
 }
 ```
 
-#### Configuring indentation of wrapped lines
+#### 配置换行后的缩进
 
 ```js wrap preserveIndent
 // Example with preserveIndent (enabled by default)
@@ -1802,9 +1802,9 @@ function getLongString() {
 }
 ```
 
-## Collapsible Sections
+## 可折叠区域
 
-[Collapsible Sections](https://expressive-code.com/plugins/collapsible-sections/)
+[可折叠区域](https://expressive-code.com/plugins/collapsible-sections/)
 
 ```js collapse={1-5, 12-14, 21-24}
 // All this boilerplate setup code will be collapsed
@@ -1833,11 +1833,11 @@ engine.freeMemory()
 engine.shutdown({ reason: 'End of example boilerplate code' })
 ```
 
-## Line Numbers
+## 行号
 
-[Line Numbers](https://expressive-code.com/plugins/line-numbers/)
+[行号](https://expressive-code.com/plugins/line-numbers/)
 
-### Displaying line numbers per block
+### 按代码块显示行号
 
 ```js showLineNumbers
 // This code block will show line numbers
@@ -1853,7 +1853,7 @@ console.log('Hello?')
 console.log('Sorry, do you know what line I am on?')
 ```
 
-### Changing the starting line number
+### 更改起始行号
 
 ```js showLineNumbers startLineNumber=5
 console.log('Greetings from line 5!')
@@ -1862,17 +1862,17 @@ console.log('I am on line 6')
 
 ---
 
-## Audio Reader: Japanese Anime Mystery Voices
+## 音频阅读器（Audio Reader）：日语动漫神秘声音
 
-These short Japanese voice fragments feel as though they were picked up from the edge of an anime scene: a teasing call, a bright greeting, a tiny laugh, and a few lines with no clear origin. They are mood samples rather than dialogue transcripts, so let the sound carry the meaning.
+这些简短的日语语音片段，仿佛是从某个动漫场景的边缘截取而来：一句调皮的呼唤、一声轻快的问候、一阵小小的笑声，以及几句来历不明的台词。它们是氛围样本，而非对话转录，所以让声音来传递含义。
 
-Audio Reader keeps them quiet until you choose to listen. Each speaker button loads and plays its clip only after it is pressed.
+音频阅读器会让它们保持安静，直到你选择聆听。每个说话人按钮只有在被按下之后，才会加载并播放其音频片段。
 
 ```markdown
 :audio-reader[Clip title]{src="/assets/audio/filename.wav"}
 ```
 
-## The fragments
+## 片段
 
 - **Baka**: :audio-reader[バカ]{src="/assets/audio/Baka.wav"}
 - **Ciallo**: :audio-reader[Ciallo！！]{src="/assets/audio/Ciallo.wav"}
@@ -1880,13 +1880,13 @@ Audio Reader keeps them quiet until you choose to listen. Each speaker button lo
 - **Imoi**: :audio-reader[イモい]{src="/assets/audio/Imoi.wav"}
 - **Zako**: :audio-reader[雑魚じゃん、雑魚雑魚]{src="/assets/audio/Zako.wav"}
 
-`src` must use a site-root path or an HTTPS URL, and the directive label cannot be empty. Invalid or incomplete directives remain ordinary Markdown and do not load Audio Reader resources.
+`src` 必须使用站点根路径或 HTTPS URL，且指令标签不能为空。无效或不完整的指令会保持普通 Markdown，并且不会加载音频阅读器资源。
 
 ---
 
 ## video.md
 
-Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
+只需从 YouTube 或其他平台复制嵌入代码，然后粘贴到 Markdown 文件中即可。
 
 ```yaml
 ---
@@ -1916,17 +1916,17 @@ published: 2023-10-19
 
 ---
 
-## Image Gallery Grid: Syntax and Complete Examples
+## 图片画廊网格：语法与完整示例
 
-`:::grid` is the blog's image gallery container directive. It arranges ordinary Markdown images in a responsive grid with a consistent aspect ratio and automatically enables lightbox viewing. Use it for article images, screenshots, portfolios, or small albums.
+`:::grid` 是本博客的图片画廊容器指令。它以一致的宽高比把普通 Markdown 图片排布成响应式网格，并自动启用灯箱查看。可用于文章图片、截图、作品集或小型相册。
 
-Images in the same gallery use the same card ratio. By default, center cropping fills every card and keeps each row tidy; clicking an image opens the complete original in a lightbox. Every gallery has its own lightbox group and does not mix with other images in the post.
+同一画廊中的图片使用相同的卡片比例。默认情况下，居中裁剪会填满每张卡片并让每一行保持整齐；点击图片会在灯箱中打开完整原图。每个画廊都有自己独立的灯箱分组，不会与文章中的其他图片混在一起。
 
-> This post is both feature documentation and a visual test page. View the examples at desktop, tablet, and mobile widths, then click any image to verify lightbox grouping.
+> 这篇文章既是功能文档，也是一个可视化测试页面。请在桌面、平板和移动宽度下查看示例，然后点击任意图片以验证灯箱分组。
 
-## Minimal Syntax
+## 极简语法
 
-Write Markdown images directly between `:::grid` and the closing `:::`:
+直接在 `:::grid` 和结束的 `:::` 之间书写 Markdown 图片：
 
 ````markdown
 :::grid
@@ -1936,27 +1936,27 @@ Write Markdown images directly between `:::grid` and the closing `:::`:
 :::
 ````
 
-Each image must occupy its own paragraph, with a blank line between images. Keep only images in a gallery; write paragraphs, lists, and code blocks outside the container.
+每张图片都必须占据自己的段落，图片之间用空行分隔。画廊中只保留图片；段落、列表和代码块请写在容器之外。
 
-Here is the result of the minimal syntax. Without parameters, the grid uses three columns, a `16/10` ratio, and `cover` by default.
+下面是极简语法的结果。在不带参数的情况下，网格默认使用三列、`16/10` 比例和 `cover`。
 
 :::grid
-![Minimal syntax result: first image](./image-grid-demo/./landscape-1.webp)
+![极简语法结果：第一张图片](./image-grid-demo/./landscape-1.webp)
 
-![Minimal syntax result: second image](./image-grid-demo/./landscape-2.webp)
+![极简语法结果：第二张图片](./image-grid-demo/./landscape-2.webp)
 :::
 
-## Parameters at a Glance
+## 参数一览
 
-Write all parameters in braces after the opening directive: `:::grid{parameter="value"}`.
+把所有参数写在开头指令后面的大括号中：`:::grid{parameter="value"}`。
 
-| Parameter | Allowed values | Default | Purpose |
+| 参数 | 允许的值 | 默认值 | 用途 |
 | --- | --- | --- | --- |
-| `columns` | Integers from `1` to `6` | `3` | Number of columns per row on desktop. Invalid values fall back to `3`. |
-| `aspect` | A positive ratio, such as `16/9`, `3/4`, or `1/1` | `16/10` | The displayed card ratio, not the original image ratio. |
-| `fit` | `cover`, `contain` | `cover` | Image fitting mode. `cover` crops to fill; `contain` preserves the complete image and may leave empty space. |
+| `columns` | `1` 到 `6` 的整数 | `3` | 桌面上每行的列数。无效值会回退为 `3`。 |
+| `aspect` | 正比例，例如 `16/9`、`3/4` 或 `1/1` | `16/10` | 显示的卡片比例，而非原图比例。 |
+| `fit` | `cover`、`contain` | `cover` | 图片适配模式。`cover` 裁剪以填满；`contain` 保留完整图片，可能留下空白。 |
 
-Complete example:
+完整示例：
 
 ````markdown
 :::grid{columns="3" aspect="16/9" fit="cover"}
@@ -1968,45 +1968,45 @@ Complete example:
 :::
 ````
 
-The following result uses the three-column landscape syntax above. Compare the card ratio, column count, and the way a title takes precedence over alt text as the caption:
+下面的结果使用了上面的三列横版语法。请对比卡片比例、列数，以及标题优先于 alt 文本作为说明的方式：
 
 :::grid{columns="3" aspect="16/9" fit="cover"}
-![Parameter example: first landscape image](./image-grid-demo/./landscape-1.webp "Landscape caption 1")
+![参数示例：第一张横版图片](./image-grid-demo/./landscape-1.webp "横版说明 1")
 
-![Parameter example: second landscape image](./image-grid-demo/./landscape-2.webp "Landscape caption 2")
+![参数示例：第二张横版图片](./image-grid-demo/./landscape-2.webp "横版说明 2")
 
-![Parameter example: third landscape image](./image-grid-demo/./landscape-3.webp "Landscape caption 3")
+![参数示例：第三张横版图片](./image-grid-demo/./landscape-3.webp "横版说明 3")
 :::
 
-## Captions and Alt Text
+## 说明与 Alt 文本
 
-An image's alt text serves both as accessible alternative text and as its default caption. When an image has an optional title, the title is used as the caption instead:
+图片的 alt 文本既用作无障碍替代文本，也用作其默认说明。当图片带有可选标题时，标题会被用作说明：
 
 ```markdown
 ![Text used for accessibility](./image-grid-demo/./image.webp "Caption shown below the image")
 ```
 
-In the same row, captions align to the bottom of every card. A wrapping caption does not make the others float at a different height. Ratio text such as `3:4` and `16:9` can be written directly in body text, headings, and alt text without escaping.
+在同一行中，说明会与每张卡片的底部对齐。换行的说明不会让其他卡片漂浮到不同的高度。诸如 `3:4` 和 `16:9` 这样的比例文本可以直接写在正文、标题和 alt 文本中，无需转义。
 
-This example demonstrates the default alt-text caption, an explicit title caption, and bottom alignment for a longer caption:
+这个示例演示了默认的 alt 文本说明、显式的标题说明，以及较长说明的底部对齐：
 
 :::grid{columns="3" aspect="1/1"}
-![This image has no title, so its alt text is the caption](./image-grid-demo/./square-1.webp)
+![这张图片没有标题，因此其 alt 文本就是说明](./image-grid-demo/./square-1.webp)
 
-![Second square image with accessible alt text](./image-grid-demo/./square-2.webp "This title is displayed as the caption")
+![第二张带无障碍 alt 文本的方形图片](./image-grid-demo/./square-2.webp "这个标题会作为说明显示")
 
-![Accessible description of a 3:4 poster](./image-grid-demo/./square-3.webp "This is a longer caption for checking that every caption remains aligned to the bottom of its card when it wraps")
+![对一张 3:4 海报的无障碍描述](./image-grid-demo/./square-3.webp "这是一段较长的说明，用于检查每段说明在换行时是否都保持与其卡片底部对齐")
 :::
 
-## Layout and Cropping
+## 布局与裁剪
 
-Desktop layouts use the number of columns specified by `columns`. Below `768px`, grids use at most two columns; below `480px`, they switch to one column. The card wrapper fixes the `aspect` ratio and clips rounded corners, while the image fills the card without the theme's default image margins.
+桌面布局使用 `columns` 指定的列数。低于 `768px` 时，网格最多使用两列；低于 `480px` 时，切换为单列。卡片包装器固定 `aspect` 比例并裁剪圆角，而图片会填满卡片，不带主题默认的图片边距。
 
-- Choose `cover`: the recommended default. Images are cropped from the center to fill the card, making the gallery look consistent.
-- Choose `contain`: the full original image is shown without cropping. When its ratio differs from the card, the theme background remains visible; use this for images that cannot be cropped.
-- To preserve the complete image without empty space, set `aspect` close to the original image ratio or place the image in a grid of its own.
+- 选择 `cover`：推荐的默认值。图片从中心裁剪以填满卡片，使画廊看起来更一致。
+- 选择 `contain`：完整显示原图而不裁剪。当其比例与卡片不同时，主题背景会保持可见；用于不能被裁剪的图片。
+- 要在不留空白的情况下保留完整图片，请将 `aspect` 设置得接近原图比例，或将图片放在独立网格中。
 
-The following examples place the same portrait images in `16/9` cards with `cover` and `contain`. The first crops them; the second preserves the full image and leaves background space.
+下面的示例将相同的竖版图片放入 `16/9` 卡片中，分别使用 `cover` 和 `contain`。前者裁剪它们；后者保留完整图片并留下背景空白。
 
 ````markdown
 :::grid{columns="3" aspect="16/9" fit="cover"}
@@ -2023,24 +2023,24 @@ The following examples place the same portrait images in `16/9` cards with `cove
 ````
 
 :::grid{columns="3" aspect="16/9" fit="cover"}
-![First cover result](./image-grid-demo/./default-portrait-1.webp "Cover: center crop")
+![第一张 cover 结果](./image-grid-demo/./default-portrait-1.webp "Cover：居中裁剪")
 
-![Second cover result](./image-grid-demo/./default-portrait-2.webp "Cover: fill the card")
+![第二张 cover 结果](./image-grid-demo/./default-portrait-2.webp "Cover：填满卡片")
 
-![Third cover result](./image-grid-demo/./default-portrait-3.webp "Cover: a more consistent layout")
+![第三张 cover 结果](./image-grid-demo/./default-portrait-3.webp "Cover：更一致的布局")
 :::
 
 :::grid{columns="3" aspect="16/9" fit="contain"}
-![First contain result](./image-grid-demo/./default-portrait-1.webp "Contain: preserve the complete original")
+![第一张 contain 结果](./image-grid-demo/./default-portrait-1.webp "Contain：保留完整原图")
 
-![Second contain result](./image-grid-demo/./default-portrait-2.webp "Contain: empty space may appear")
+![第二张 contain 结果](./image-grid-demo/./default-portrait-2.webp "Contain：可能出现空白")
 
-![Third contain result](./image-grid-demo/./default-portrait-3.webp "Contain: suitable for edge details")
+![第三张 contain 结果](./image-grid-demo/./default-portrait-3.webp "Contain：适合边缘细节")
 :::
 
-## Default Configuration
+## 默认配置
 
-Without attributes, the default is three columns, a `16/10` ratio, and `cover` cropping. These three portrait images verify default cropping and captions.
+在不带属性的情况下，默认是三列、`16/10` 比例和 `cover` 裁剪。这三张竖版图片用于验证默认裁剪和说明。
 
 ````markdown
 :::grid
@@ -2053,16 +2053,16 @@ Without attributes, the default is three columns, a `16/10` ratio, and `cover` c
 ````
 
 :::grid
-![Default configuration: portrait image one](./image-grid-demo/./default-portrait-1.webp)
+![默认配置：竖版图片一](./image-grid-demo/./default-portrait-1.webp)
 
-![Default configuration: portrait image two](./image-grid-demo/./default-portrait-2.webp)
+![默认配置：竖版图片二](./image-grid-demo/./default-portrait-2.webp)
 
-![Default configuration: portrait image three](./image-grid-demo/./default-portrait-3.webp)
+![默认配置：竖版图片三](./image-grid-demo/./default-portrait-3.webp)
 :::
 
-## Three-Column Portraits: 3:4
+## 三列竖版：3:4
 
-With `aspect="3/4"`, the three portrait images fill consistently proportioned vertical cards. If an original image has a different ratio, `cover` crops its edges from the center.
+使用 `aspect="3/4"` 时，三张竖版图片会填满比例一致的纵向卡片。如果原图比例不同，`cover` 会从中心裁剪其边缘。
 
 ````markdown
 :::grid{columns="3" aspect="3/4"}
@@ -2075,16 +2075,16 @@ With `aspect="3/4"`, the three portrait images fill consistently proportioned ve
 ````
 
 :::grid{columns="3" aspect="3/4"}
-![3:4 test image one](./image-grid-demo/./default-portrait-1.webp "Portrait 1")
+![3:4 测试图片一](./image-grid-demo/./default-portrait-1.webp "竖版 1")
 
-![3:4 test image two](./image-grid-demo/./default-portrait-2.webp "Portrait 2")
+![3:4 测试图片二](./image-grid-demo/./default-portrait-2.webp "竖版 2")
 
-![3:4 test image three](./image-grid-demo/./default-portrait-3.webp "Portrait 3")
+![3:4 测试图片三](./image-grid-demo/./default-portrait-3.webp "竖版 3")
 :::
 
-## Three-Column Landscapes: 16:9
+## 三列横版：16:9
 
-This set demonstrates a common video-cover ratio in a three-column layout. Cropping is minimal when the landscape images are close to the card ratio.
+这一组演示了三列布局中常见的视频封面比例。当横版图片接近卡片比例时，裁剪量最小。
 
 ````markdown
 :::grid{columns="3" aspect="16/9"}
@@ -2097,16 +2097,16 @@ This set demonstrates a common video-cover ratio in a three-column layout. Cropp
 ````
 
 :::grid{columns="3" aspect="16/9"}
-![16:9 test image one](./image-grid-demo/./feature-landscape-1.webp)
+![16:9 测试图片一](./image-grid-demo/./feature-landscape-1.webp)
 
-![16:9 test image two](./image-grid-demo/./feature-landscape-2.webp)
+![16:9 测试图片二](./image-grid-demo/./feature-landscape-2.webp)
 
-![16:9 test image three](./image-grid-demo/./feature-landscape-3.webp)
+![16:9 测试图片三](./image-grid-demo/./feature-landscape-3.webp)
 :::
 
-## Two-Column Squares: 1:1
+## 两列方形：1:1
 
-Two columns work well when larger preview cards are needed. The third image moves to the next row. The final row keeps its grid-track width instead of stretching images to fill the row.
+当需要更大的预览卡片时，两列很合适。第三张图片会移到下一行。最后一行保持其网格轨道宽度，而不是拉伸图片来填满整行。
 
 ````markdown
 :::grid{columns="2" aspect="1/1"}
@@ -2119,16 +2119,16 @@ Two columns work well when larger preview cards are needed. The third image move
 ````
 
 :::grid{columns="2" aspect="1/1"}
-![1:1 test image one](./image-grid-demo/./mixed-square-1.webp)
+![1:1 测试图片一](./image-grid-demo/./mixed-square-1.webp)
 
-![1:1 test image two](./image-grid-demo/./mixed-square-2.webp)
+![1:1 测试图片二](./image-grid-demo/./mixed-square-2.webp)
 
-![1:1 test image three](./image-grid-demo/./mixed-square-3.webp)
+![1:1 测试图片三](./image-grid-demo/./mixed-square-3.webp)
 :::
 
-## Four Columns with `contain`
+## 使用 `contain` 的四列
 
-`fit="contain"` does not crop the original image. When the image ratio differs from the card ratio, the theme background remains visible. This is intentional, not a layout issue. It also verifies that four-column grids and separate lightbox groups do not interfere with each other.
+`fit="contain"` 不会裁剪原图。当图片比例与卡片比例不同时，主题背景会保持可见。这是有意为之，而非布局问题。它同时也验证了四列网格与独立的灯箱分组不会相互干扰。
 
 ````markdown
 :::grid{columns="4" aspect="16/9" fit="contain"}
@@ -2141,16 +2141,16 @@ Two columns work well when larger preview cards are needed. The third image move
 ````
 
 :::grid{columns="4" aspect="16/9" fit="contain"}
-![Contain: portrait image one](./image-grid-demo/./default-portrait-1.webp)
+![Contain：竖版图片一](./image-grid-demo/./default-portrait-1.webp)
 
-![Contain: portrait image two](./image-grid-demo/./default-portrait-2.webp)
+![Contain：竖版图片二](./image-grid-demo/./default-portrait-2.webp)
 
-![Contain: portrait image three](./image-grid-demo/./default-portrait-3.webp)
+![Contain：竖版图片三](./image-grid-demo/./default-portrait-3.webp)
 :::
 
-## Single-Column Detail Image
+## 单列细节图片
 
-One column is suitable when an image needs a larger reading size. It remains one column on desktop, tablet, and mobile, and the original is still available in the lightbox.
+当图片需要更大的阅读尺寸时，单列很合适。它在桌面、平板和移动端都保持单列，并且灯箱中仍然可以查看原图。
 
 ````markdown
 :::grid{columns="1" aspect="16/9"}
@@ -2159,12 +2159,12 @@ One column is suitable when an image needs a larger reading size. It remains one
 ````
 
 :::grid{columns="1" aspect="16/9"}
-![Single-column test image](./image-grid-demo/./feature-landscape-1.webp)
+![单列测试图片](./image-grid-demo/./feature-landscape-1.webp)
 :::
 
-## Sparse Five-Column Row
+## 稀疏的五列行
 
-Five columns verify a higher supported column count. With only three images, the final row remains left-aligned instead of stretching the images.
+五列用于验证更高的受支持列数。在只有三张图片的情况下，最后一行会保持左对齐，而不是拉伸图片。
 
 ````markdown
 :::grid{columns="5" aspect="1/1"}
@@ -2177,16 +2177,16 @@ Five columns verify a higher supported column count. With only three images, the
 ````
 
 :::grid{columns="5" aspect="1/1"}
-![Five-column test image one](./image-grid-demo/./mixed-square-1.webp)
+![五列测试图片一](./image-grid-demo/./mixed-square-1.webp)
 
-![Five-column test image two](./image-grid-demo/./mixed-square-2.webp)
+![五列测试图片二](./image-grid-demo/./mixed-square-2.webp)
 
-![Five-column test image three](./image-grid-demo/./mixed-square-3.webp)
+![五列测试图片三](./image-grid-demo/./mixed-square-3.webp)
 :::
 
-## Mixed Images in Six Columns
+## 六列混合图片
 
-Six columns are the current maximum. Mixing landscape and portrait images verifies `cover` cropping, captions on narrow cards, and a dense desktop layout. For readable article content, two to four columns are usually preferable.
+六列是当前的最大值。混合横版和竖版图片可以验证 `cover` 裁剪、窄卡片上的说明，以及密集的桌面布局。对于可读的文章内容，通常两到四列更合适。
 
 ````markdown
 :::grid{columns="6" aspect="1/1"}
@@ -2205,22 +2205,22 @@ Six columns are the current maximum. Mixing landscape and portrait images verifi
 ````
 
 :::grid{columns="6" aspect="1/1"}
-![Six-column test image one](./image-grid-demo/./default-portrait-1.webp)
+![六列测试图片一](./image-grid-demo/./default-portrait-1.webp)
 
-![Six-column test image two](./image-grid-demo/./default-portrait-2.webp)
+![六列测试图片二](./image-grid-demo/./default-portrait-2.webp)
 
-![Six-column test image three](./image-grid-demo/./default-portrait-3.webp)
+![六列测试图片三](./image-grid-demo/./default-portrait-3.webp)
 
-![Six-column test image four](./image-grid-demo/./feature-landscape-1.webp)
+![六列测试图片四](./image-grid-demo/./feature-landscape-1.webp)
 
-![Six-column test image five](./image-grid-demo/./feature-landscape-2.webp)
+![六列测试图片五](./image-grid-demo/./feature-landscape-2.webp)
 
-![Six-column test image six](./image-grid-demo/./feature-landscape-3.webp)
+![六列测试图片六](./image-grid-demo/./feature-landscape-3.webp)
 :::
 
-## Four-Column Squares: 1:1
+## 四列方形：1:1
 
-Four square images with the same ratio are a typical four-column layout. Desktop displays all four in one row; tablet collapses to two columns and mobile to one.
+四张比例相同的方形图片是典型的四列布局。桌面端在一行内显示全部四张；平板端折叠为两列，移动端为一列。
 
 ````markdown
 :::grid{columns="4" aspect="1/1"}
@@ -2235,18 +2235,18 @@ Four square images with the same ratio are a typical four-column layout. Desktop
 ````
 
 :::grid{columns="4" aspect="1/1"}
-![Square image one](./image-grid-demo/./square-1.webp)
+![方形图片一](./image-grid-demo/./square-1.webp)
 
-![Square image two](./image-grid-demo/./square-2.webp)
+![方形图片二](./image-grid-demo/./square-2.webp)
 
-![Square image three](./image-grid-demo/./square-3.webp)
+![方形图片三](./image-grid-demo/./square-3.webp)
 
-![Square image four](./image-grid-demo/./square-4.webp)
+![方形图片四](./image-grid-demo/./square-4.webp)
 :::
 
-## Six-Column Landscapes: 16:9
+## 六列横版：16:9
 
-Six landscape columns work well for thumbnail previews, portfolios, and screenshot indexes. Even if original ratios differ slightly, `cover` fills every `16/9` card consistently.
+六列横版非常适合缩略图预览、作品集和截图索引。即使原图比例略有不同，`cover` 也能一致地填满每张 `16/9` 卡片。
 
 ````markdown
 :::grid{columns="6" aspect="16/9"}
@@ -2265,22 +2265,22 @@ Six landscape columns work well for thumbnail previews, portfolios, and screensh
 ````
 
 :::grid{columns="6" aspect="16/9"}
-![Landscape image one](./image-grid-demo/./landscape-1.webp)
+![横版图片一](./image-grid-demo/./landscape-1.webp)
 
-![Landscape image two](./image-grid-demo/./landscape-2.webp)
+![横版图片二](./image-grid-demo/./landscape-2.webp)
 
-![Landscape image three](./image-grid-demo/./landscape-3.webp)
+![横版图片三](./image-grid-demo/./landscape-3.webp)
 
-![Landscape image four](./image-grid-demo/./landscape-4.webp)
+![横版图片四](./image-grid-demo/./landscape-4.webp)
 
-![Landscape image five](./image-grid-demo/./landscape-5.webp)
+![横版图片五](./image-grid-demo/./landscape-5.webp)
 
-![Landscape image six](./image-grid-demo/./landscape-6.webp)
+![横版图片六](./image-grid-demo/./landscape-6.webp)
 :::
 
-## Three-Column Portraits: 3:4
+## 三列竖版：3:4
 
-This group of six portrait images demonstrates a common layout for people, posters, or mobile screenshots. The images form two rows of three, with captions aligned to the bottom.
+这组六张竖版图片演示了人物、海报或移动端截图常见的布局。图片排成两行、每行三张，说明与底部对齐。
 
 ````markdown
 :::grid{columns="3" aspect="3/4"}
@@ -2299,22 +2299,22 @@ This group of six portrait images demonstrates a common layout for people, poste
 ````
 
 :::grid{columns="3" aspect="3/4"}
-![Portrait image one](./image-grid-demo/./portrait-1.webp)
+![竖版图片一](./image-grid-demo/./portrait-1.webp)
 
-![Portrait image two](./image-grid-demo/./portrait-2.webp)
+![竖版图片二](./image-grid-demo/./portrait-2.webp)
 
-![Portrait image three](./image-grid-demo/./portrait-3.webp)
+![竖版图片三](./image-grid-demo/./portrait-3.webp)
 
-![Portrait image four](./image-grid-demo/./portrait-4.webp)
+![竖版图片四](./image-grid-demo/./portrait-4.webp)
 
-![Portrait image five](./image-grid-demo/./portrait-5.webp)
+![竖版图片五](./image-grid-demo/./portrait-5.webp)
 
-![Portrait image six](./image-grid-demo/./portrait-6.webp)
+![竖版图片六](./image-grid-demo/./portrait-6.webp)
 :::
 
-## Edge-Critical Content: `cover` and Lightbox
+## 边缘关键内容：`cover` 与灯箱
 
-These images contain important text or details near their edges. `cover` keeps the grid tidy but may crop those edges; click an image to view the uncropped original in the lightbox. Use clear captions for edge-sensitive images, or use `contain` below.
+这些图片在靠近边缘处包含重要的文字或细节。`cover` 能保持网格整齐，但可能会裁剪掉这些边缘；点击图片即可在灯箱中查看未经裁剪的原图。对于边缘敏感型图片，请使用清晰的说明，或者使用下面的 `contain`。
 
 ````markdown
 :::grid{columns="3" aspect="16/9" fit="cover"}
@@ -2327,16 +2327,16 @@ These images contain important text or details near their edges. `cover` keeps t
 ````
 
 :::grid{columns="3" aspect="16/9" fit="cover"}
-![First edge-critical image](./image-grid-demo/./critical-1.webp "Open the lightbox to view the complete edge content")
+![第一张边缘关键图片](./image-grid-demo/./critical-1.webp "打开灯箱以查看完整的边缘内容")
 
-![Second edge-critical image](./image-grid-demo/./critical-2.webp "Open the lightbox to view the complete edge content")
+![第二张边缘关键图片](./image-grid-demo/./critical-2.webp "打开灯箱以查看完整的边缘内容")
 
-![Third edge-critical image](./image-grid-demo/./critical-3.webp "Open the lightbox to view the complete edge content")
+![第三张边缘关键图片](./image-grid-demo/./critical-3.webp "打开灯箱以查看完整的边缘内容")
 :::
 
-## Extreme Ratios with `contain`
+## 使用 `contain` 的极端比例
 
-For banners, long screenshots, and other extreme image ratios, `contain` displays the complete original. Unlike `cover`, it may leave theme-background space, but it never crops content.
+对于横幅、长截图和其他极端图片比例，`contain` 会显示完整的原图。与 `cover` 不同，它可能留下主题背景空白，但绝不会裁剪内容。
 
 ````markdown
 :::grid{columns="3" aspect="16/9" fit="contain"}
@@ -2349,16 +2349,16 @@ For banners, long screenshots, and other extreme image ratios, `contain` display
 ````
 
 :::grid{columns="3" aspect="16/9" fit="contain"}
-![Extreme-ratio image one](./image-grid-demo/./extreme-1.webp)
+![极端比例图片一](./image-grid-demo/./extreme-1.webp)
 
-![Extreme-ratio image two](./image-grid-demo/./extreme-2.webp)
+![极端比例图片二](./image-grid-demo/./extreme-2.webp)
 
-![Extreme-ratio image three](./image-grid-demo/./extreme-3.webp)
+![极端比例图片三](./image-grid-demo/./extreme-3.webp)
 :::
 
-## Transparent Images
+## 透明图片
 
-Transparent images reveal the card's theme background. This single-column `contain` example makes the transparent areas, original edges, and lightbox behavior easy to inspect.
+透明图片会显露出卡片的主题背景。这个单列 `contain` 示例便于检查透明区域、原始边缘以及灯箱行为。
 
 ````markdown
 :::grid{columns="1" aspect="16/9" fit="contain"}
@@ -2367,68 +2367,68 @@ Transparent images reveal the card's theme background. This single-column `conta
 ````
 
 :::grid{columns="1" aspect="16/9" fit="contain"}
-![Transparent-background test image](./image-grid-demo/./transparent-1.webp)
+![透明背景测试图片](./image-grid-demo/./transparent-1.webp)
 :::
 
-## Lightbox Navigation
+## 灯箱导航
 
-Click any image in a grid to open the Fancybox lightbox. There you can zoom, rotate, enter fullscreen, view thumbnails, and navigate with the arrow keys. Navigation is limited to the current `:::grid` container: for example, clicking "16:9 test image one" only opens the other two landscape images in that section.
+点击网格中的任意图片即可打开 Fancybox 灯箱。在那里你可以缩放、旋转、进入全屏、查看缩略图，并用方向键导航。导航仅限于当前的 `:::grid` 容器：例如，点击"16:9 测试图片一"只会打开该节中的另外两张横版图片。
 
-Ordinary Markdown images in the same post continue to be handled separately; they are not added to any grid gallery.
+同一篇文章中的普通 Markdown 图片仍然会被单独处理；它们不会被添加到任何网格画廊中。
 
-## Checklist
+## 检查清单
 
-1. Images in each grid have consistent dimensions, with captions below the cards.
-2. Images scale slightly on hover; after clicking, they can be zoomed, rotated, and navigated with the keyboard.
-3. Clicking "16:9 test image one" lets the lightbox browse only the other two landscape images in that section.
-4. Below 768px, grids use at most two columns; below 480px, they use one column.
-5. Portrait images in "Four Columns with `contain`" are fully visible with empty space and no cropping.
-6. Five- and six-column grids retain their specified column count on wide screens, then collapse to two or one column according to the responsive rules.
+1. 每个网格中的图片尺寸一致，卡片下方带有说明。
+2. 悬停时图片会轻微缩放；点击后可以缩放、旋转并用键盘导航。
+3. 点击"16:9 测试图片一"时，灯箱只会浏览该节中的另外两张横版图片。
+4. 低于 768px 时，网格最多使用两列；低于 480px 时，使用单列。
+5. "使用 `contain` 的四列"中的竖版图片完全可见，留有空白且不裁剪。
+6. 五列和六列网格在宽屏上保持其指定列数，然后根据响应式规则折叠为两列或一列。
 
 ---
 
 ## encrypted-demo.md
 
-# Password Protected Article
+# 密码保护的文章
 
-Congratulations! You have successfully unlocked this encrypted post. The browser decrypted this pre-compiled content locally using the **Web Crypto API (AES-256-GCM + PBKDF2)**.
-
----
-
-## 1. Security Architecture and Core Features
-
-Shirone's post encryption system shares a unified security foundation with protected albums, providing enterprise-grade security for static publishing:
-
-1. **Zero Plaintext in Static HTML Build**  
-   During the Astro SSG build pipeline, post Markdown is compiled to HTML and immediately encrypted with AES-256-GCM before emitting pages. The published static HTML contains **zero plaintext** of the protected body or outline.
-
-2. **Authenticated Encryption with AAD Scope Binding**  
-   - Key derivation follows OWASP recommendations with **310,000 PBKDF2 iterations** (SHA-256) and a cryptographically random 16-byte salt;
-   - Every encryption payload generates an independent 12-byte random IV;
-   - An **Additional Authenticated Data (AAD)** binding `shirone-protected-content:1:post:${slug}` guarantees that ciphertexts cannot be replayed across different posts or albums.
-
-3. **Session Persistence and Zero Disk Password Storage**  
-   - Decrypted content is cached in ephemeral browser session storage with a 30-minute expiration;
-   - Plaintext passwords are never written to disk or storage;
-   - Decrypted states persist seamlessly across Swup client-side navigations and page reloads in the same session.
-
-4. **Full-Site Leakage Prevention**  
-   - **Search Indexing**: Static pages contain no plaintext, preventing search engines and Pagefind from indexing private content;
-   - **RSS Feed**: Protected articles emit localized placeholders in feeds, preventing RSS aggregators from pulling sensitive text;
-   - **Card Summaries & Word Counts**: When `hideHomeContent: true` is configured, descriptions and word counts are masked on index and archive cards;
-   - **Table of Contents (TOC)**: Heading hierarchies remain hidden until unlock, and are dynamically rebuilt and synchronized with M3E styling upon decryption.
-
-> 💡 **Demo Note**: The default unlock password for this demo post is `shirone-secret`.
+恭喜！你已经成功解锁了这篇加密文章。浏览器使用 **Web Crypto API（AES-256-GCM + PBKDF2）** 在本地解密了这份预编译内容。
 
 ---
 
-## 2. Interactive Rich Content Demonstration
+## 1. 安全架构与核心特性
 
-Post decryption coordinates with runtime helpers to dynamically mount syntax highlighting, code collapse, interactive Mermaid diagrams, LaTeX formulas, and image lightboxes.
+Shirone 的文章加密系统与受保护相册共享统一的安全基础，为静态发布提供企业级安全性：
 
-### 2.1 Code Blocks and Syntax Highlighting
+1. **静态 HTML 构建中的零明文**  
+   在 Astro SSG 构建管道中，文章 Markdown 被编译为 HTML，并在输出页面前立即使用 AES-256-GCM 加密。发布的静态 HTML 中，受保护正文或大纲的**明文为零**。
 
-The code block below tests Expressive Code syntax highlighting, copy actions, and line decorations:
+2. **带 AAD 作用域绑定的认证加密**  
+   - 密钥派生遵循 OWASP 建议，采用 **310,000 次 PBKDF2 迭代**（SHA-256）以及加密随机的 16 字节盐；
+   - 每个加密载荷都会生成一个独立的 12 字节随机 IV；
+   - **附加认证数据（AAD）** 绑定 `shirone-protected-content:1:post:${slug}` 确保密文无法在不同文章或相册之间被重放。
+
+3. **会话持久化与零磁盘密码存储**  
+   - 解密后的内容缓存在临时的浏览器会话存储中，30 分钟后过期；
+   - 明文密码绝不会写入磁盘或存储；
+   - 在同一会话中，解密状态可无缝地在 Swup 客户端导航和页面刷新之间保持。
+
+4. **全站防泄露**  
+   - **搜索索引**：静态页面不含明文，防止搜索引擎和 Pagefind 索引私有内容；
+   - **RSS 订阅源**：受保护文章在订阅源中输出本地化占位符，防止 RSS 聚合器抓取敏感文本；
+   - **卡片摘要与字数**：当配置 `hideHomeContent: true` 时，索引和归档卡片上的描述和字数会被遮罩；
+   - **目录（TOC）**：标题层级在解锁前保持隐藏，并在解密时动态重建并与 M3E 样式同步。
+
+> 💡 **演示提示**：这篇演示文章的默认解锁密码是 `shirone-secret`。
+
+---
+
+## 2. 交互式富内容演示
+
+文章解密会与运行时辅助函数协调，动态挂载语法高亮、代码折叠、交互式 Mermaid 图表、LaTeX 公式和图片灯箱。
+
+### 2.1 代码块与语法高亮
+
+下面的代码块测试了 Expressive Code 的语法高亮、复制操作和行装饰：
 
 ```typescript
 import { decryptProtectedContent, type ProtectedPayload } from "@/utils/password-protection";
@@ -2454,9 +2454,9 @@ pnpm.cmd type-check
 pnpm.cmd test
 ```
 
-### 2.2 Mermaid Architecture Diagram
+### 2.2 Mermaid 架构图
 
-The flowchart below is rendered via Mermaid and dynamically bound upon decryption:
+下面的流程图通过 Mermaid 渲染，并在解密时动态绑定：
 
 ```mermaid
 flowchart TD
@@ -2482,11 +2482,11 @@ flowchart TD
     end
 ```
 
-### 2.3 LaTeX Mathematical Formulas
+### 2.3 LaTeX 数学公式
 
-Inline formulas: Euler's identity $e^{i\pi} + 1 = 0$ and Gaussian integral $\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$.
+行内公式：欧拉恒等式 $e^{i\pi} + 1 = 0$ 和高斯积分 $\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$。
 
-Display mathematical formulas with horizontal scroll containers:
+使用水平滚动容器显示数学公式：
 
 $$
 f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right)
@@ -2496,41 +2496,41 @@ $$
 \mathcal{L}_{\text{AES-GCM}} = \text{GHASH}_H(A \parallel C \parallel L) \oplus \text{AES}_K(J_0)
 $$
 
-### 2.4 Admonitions
+### 2.4 提示框
 
-:::note Architecture Note
-This encryption system adheres to atomic design principles and minimal patch conventions without compromising SSR stability.
+:::note 架构说明
+该加密系统遵循原子设计原则和最小补丁约定，同时不损害 SSR 稳定性。
 :::
 
-:::tip Theme Integration
-After unlocking, try switching between light and dark modes or changing the primary hue; decrypted components adapt dynamically to active design tokens.
+:::tip 主题集成
+解锁后，尝试在浅色和深色模式之间切换，或更改主色调；解密后的组件会动态适应当前激活的设计令牌。
 :::
 
-:::important Security Scope
-Static client-side encryption is designed to prevent unauthorized browsing and automated indexing. For mission-critical commercial secrets, server-side authentication is recommended.
+:::important 安全范围
+静态客户端加密旨在防止未授权的浏览和自动化索引。对于关键任务级的商业机密，建议使用服务端身份认证。
 :::
 
-:::warning Password Recovery
-Static encryption has no centralized server database. If a password is forgotten, the encrypted content cannot be recovered.
+:::warning 密码找回
+静态加密没有集中式服务器数据库。如果密码被遗忘，加密内容将无法恢复。
 :::
 
-### 2.5 GitHub Repository Card
+### 2.5 GitHub 仓库卡片
 
 ::github{repo="withastro/astro"}
 
 ---
 
-## 3. Configuration Reference
+## 3. 配置参考
 
-| Parameter | Type | Required | Default | Description |
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
 | :--- | :--- | :--- | :--- | :--- |
-| `encrypted` | `boolean` | No | `false` | Explicitly marks the post as encrypted. Implicitly `true` if `password` is set. |
-| `password` | `string` | Yes | None | Plaintext password used to encrypt at build time and unlock at runtime. |
-| `passwordHint` | `string` | No | `""` | Optional hint displayed under the password input field. |
-| `hideHomeContent` | `boolean` | No | `true` | Hides post description and word count metrics in index cards, archive, and RSS feeds. |
+| `encrypted` | `boolean` | 否 | `false` | 显式将文章标记为加密。若设置了 `password`，则隐式为 `true`。 |
+| `password` | `string` | 是 | 无 | 用于构建时加密、运行时解锁的明文密码。 |
+| `passwordHint` | `string` | 否 | `""` | 显示在密码输入框下方的可选提示。 |
+| `hideHomeContent` | `boolean` | 否 | `true` | 在索引卡片、归档和 RSS 订阅源中隐藏文章描述和字数统计。 |
 
 ---
 
-## 4. Summary
+## 4. 总结
 
-This demo verifies the entire encryption lifecycle in Shirone: zero plaintext in static output, robust cryptographic verification, session persistence across navigation and page reloads, and dynamic runtime rehydration.
+本演示验证了 Shirone 中完整的加密生命周期：静态输出中的零明文、稳健的加密校验、跨导航和页面刷新的会话持久化，以及动态的运行时再水合。

@@ -34,6 +34,11 @@ const progressRatio = $derived(
 const metaLine = $derived(
 	[anime.year, anime.studio].filter(Boolean).join(" · "),
 );
+const episodes = $derived(
+	anime.progress && anime.progress.total > 0
+		? Array.from({ length: anime.progress.total }, (_, i) => `第${i + 1}集`)
+		: [],
+);
 </script>
 
 <article
@@ -121,6 +126,17 @@ const metaLine = $derived(
 				{#each anime.genres as genre (genre)}
 					<span class="anime-card__genre">#{genre}</span>
 				{/each}
+			</div>
+		{/if}
+
+		{#if episodes.length > 0}
+			<div class="anime-card__episodes" aria-hidden="true">
+				<span class="anime-card__episodes-title">选集</span>
+				<div class="anime-card__episodes-list">
+					{#each episodes as episode (episode)}
+						<span class="anime-card__episode">{episode}</span>
+					{/each}
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -235,6 +251,7 @@ const metaLine = $derived(
 			color: #facc15
 
 	&__body
+		position: relative
 		display: flex
 		flex-direction: column
 		flex: 1
@@ -329,16 +346,60 @@ const metaLine = $derived(
 		&:hover
 			color: var(--primary)
 
+	/* 悬停选集层：覆盖正文区浮出，自动生成第 N 集胶囊（仅展示，无跳转） */
+	&__episodes
+		position: absolute
+		inset: 0
+		display: flex
+		flex-direction: column
+		gap: var(--m3e-space-2)
+		padding: var(--m3e-space-3) var(--m3e-space-4) var(--m3e-space-4)
+		background: var(--card-bg)
+		opacity: 0
+		transform: translateY(0.5rem)
+		pointer-events: none
+		overflow: hidden
+		transition:
+			opacity var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
+			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+		.anime-card:hover &
+			opacity: 1
+			transform: translateY(0)
+
+	&__episodes-title
+		color: var(--on-surface)
+		font: var(--m3e-type-label-medium)
+		font-weight: 600
+
+	&__episodes-list
+		display: flex
+		flex-wrap: wrap
+		align-content: flex-start
+		gap: 0.25rem 0.375rem
+		flex: 1
+		min-height: 0
+		overflow-y: auto
+
+	&__episode
+		padding: 0.125rem 0.5rem
+		border-radius: var(--shape-corner-full)
+		background: var(--surface-container-high)
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-label-small)
+		font-variant-numeric: tabular-nums
+
 :global(html.motion-reduced) .anime-card,
 :global(html.motion-reduced) .anime-card__cover-img,
-:global(html.motion-reduced) .anime-card__play
+:global(html.motion-reduced) .anime-card__play,
+:global(html.motion-reduced) .anime-card__episodes
 	transition: none
 	transform: none
 
 @media (prefers-reduced-motion: reduce)
 	.anime-card,
 	.anime-card__cover-img,
-	.anime-card__play
+	.anime-card__play,
+	.anime-card__episodes
 		transition: none
 		transform: none
 </style>
