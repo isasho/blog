@@ -2,6 +2,7 @@
 /**
  * 视频页主体（有机体）：页头 + 视频卡片网格 + 站内弹窗播放。
  * 有 src 的卡片点击后在当前页面内联播放（<video controls>）；
+ * 有 bvid 的卡片点击后站内弹窗内嵌 Bilibili 播放器（不跳外链）；
  * 有 link 的卡片渲染为外链，点击新标签打开。
  */
 import Card from "@components/atoms/display/Card.svelte";
@@ -20,6 +21,12 @@ let {
 let active = $state<VideoItem | null>(null);
 
 const activeSrc = $derived(active?.src ?? "");
+const activeBvid = $derived(active?.bvid ?? "");
+const activePlayerUrl = $derived(
+	activeBvid
+		? `https://player.bilibili.com/player.html?bvid=${activeBvid}&p=1&high_quality=1&danmaku=0`
+		: "",
+);
 </script>
 
 <Card color="var(--card-bg)" radius="l" class="video-section px-8 py-6">
@@ -90,7 +97,7 @@ const activeSrc = $derived(active?.src ?? "");
 	{/if}
 </Card>
 
-{#if active && activeSrc}
+{#if active && (activeSrc || activeBvid)}
 	<div
 		class="video-modal"
 		role="dialog"
@@ -104,13 +111,24 @@ const activeSrc = $derived(active?.src ?? "");
 			aria-label="关闭"
 		></button>
 		<div class="video-modal__panel">
-			<video
-				class="video-modal__video"
-				src={url(activeSrc)}
-				controls
-				autoplay
-				playsinline
-			></video>
+			{#if activeBvid}
+				<iframe
+					class="video-modal__iframe"
+					src={activePlayerUrl}
+					title={active.title}
+					loading="lazy"
+					allow="fullscreen; picture-in-picture"
+					allowfullscreen
+				></iframe>
+			{:else}
+				<video
+					class="video-modal__video"
+					src={url(activeSrc)}
+					controls
+					autoplay
+					playsinline
+				></video>
+			{/if}
 			<button
 				type="button"
 				class="video-modal__close"
@@ -278,6 +296,13 @@ const activeSrc = $derived(active?.src ?? "");
 		display: block
 		width: 100%
 		height: auto
+		background: #000
+
+	&__iframe
+		display: block
+		width: 100%
+		aspect-ratio: 16 / 9
+		border: none
 		background: #000
 
 	&__close
